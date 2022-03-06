@@ -21,10 +21,12 @@
 #ifndef CANVASELEMENTS_H
 #define CANVASELEMENTS_H
 
-#include <qcanvas.h>
+#include <q3canvas.h>
 #include <qpainter.h>
 #include <qpoint.h>
 #include <qsize.h>
+//Added by qt3to4:
+#include <Q3PointArray>
 #include "defs.h"
 
 /**
@@ -39,10 +41,10 @@ Derived from QCanvasPolygon.
 Use setPoints to set polyline points. setPen to set the pen.
 Brush is not used.
 */
-class CanvasPolyLine : public QCanvasPolygon
+class CanvasPolyLine : public Q3CanvasPolygon
 {
 public:
-    CanvasPolyLine(QCanvas* canvas);
+    CanvasPolyLine(Q3Canvas* canvas);
     virtual int rtti() const { return EUCLID_POLYLINE; }
 protected:
     virtual void drawShape(QPainter &painter);
@@ -50,10 +52,10 @@ protected:
 
 //===========================================================================
 
-class CanvasPoly : public QCanvasPolygon
+class CanvasPoly : public Q3CanvasPolygon
 {
 public:
-    CanvasPoly(QCanvas* canvas, bool fill=true);
+    CanvasPoly(Q3Canvas* canvas, bool fill=true);
     virtual int rtti() const { return EUCLID_POLY; }
     virtual bool isFilled() { return filled_; }
     virtual void setFilled(bool f) { filled_ = f; }
@@ -64,11 +66,11 @@ protected:
 
 //===========================================================================
 
-class CanvasEllipse : public QCanvasEllipse
+class CanvasEllipse : public Q3CanvasEllipse
 {
 public:
-    CanvasEllipse(QCanvas* canvas, bool fill=true) : QCanvasEllipse(canvas), filled_(fill) { }
-    CanvasEllipse( int width, int height, QCanvas * canvas ) : QCanvasEllipse(width,height,canvas), filled_(true) { }
+    CanvasEllipse(Q3Canvas* canvas, bool fill=true) : Q3CanvasEllipse(canvas), filled_(fill) { }
+    CanvasEllipse( int width, int height, Q3Canvas * canvas ) : Q3CanvasEllipse(width,height,canvas), filled_(true) { }
     virtual int rtti() const { return CIRCLE; }
     virtual bool isFilled() { return filled_; }
     virtual void setFilled(bool f) { filled_ = f; }
@@ -119,14 +121,14 @@ protected:
 It is like a Euclid Polyline but individual lines are
 hyperbolic lines in the poincare disk.
 */
-class CanvasHyperPolyLine : public QCanvasPolygonalItem
+class CanvasHyperPolyLine : public Q3CanvasPolygonalItem
 {
 public:
-    CanvasHyperPolyLine(QCanvas* canvas);
+    CanvasHyperPolyLine(Q3Canvas* canvas);
     virtual ~CanvasHyperPolyLine();
     void addLine(CanvasHyperLine* line);
     virtual int rtti() const { return HYPER_POLYLINE; }
-    virtual QPointArray areaPoints() const;
+    virtual Q3PointArray areaPoints() const;
     /**
     Doesn't make sense to use this without calling setLines() method first
     */
@@ -146,7 +148,7 @@ hyperbolic lines in the poincare disk
 class CanvasHyperPoly : public CanvasHyperPolyLine
 {
 public:
-    CanvasHyperPoly(QCanvas* canvas, bool fill=true) : CanvasHyperPolyLine(canvas), filled_(fill) { }
+    CanvasHyperPoly(Q3Canvas* canvas, bool fill=true) : CanvasHyperPolyLine(canvas), filled_(fill) { }
     virtual ~CanvasHyperPoly() { }
     virtual int rtti() const { return HYPER_POLY; }
     bool isFilled() { return filled_; }
@@ -154,7 +156,7 @@ public:
     void setFilled(bool f) { filled_ = f; }
 protected:
     virtual void drawShape(QPainter &painter);
-    QPointArray points_;
+    Q3PointArray points_;
     bool filled_;
 };
 //===========================================================================

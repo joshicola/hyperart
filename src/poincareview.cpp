@@ -19,8 +19,11 @@
  ***************************************************************************/
 #include "poincareview.h"
 #include <qfileinfo.h>
-#include <qpaintdevicemetrics.h>
-
+#include <q3paintdevicemetrics.h>
+//Added by qt3to4:
+#include <Q3PointArray>
+#include <QPixmap>
+using namespace Qt;
 //============================================================================
 //initialize static data
 int PoincareView::canvasHeight_(700);
@@ -28,15 +31,15 @@ int PoincareView::canvasWidth_(800);
 int PoincareView::diameter_( PoincareView::canvasHeight() < PoincareView::canvasWidth() ? PoincareView::canvasHeight() : PoincareView::canvasWidth() );
 QPoint PoincareView::origin_( PoincareView::canvasWidth()/2, PoincareView::canvasHeight()/2 );
 //============================================================================
-PoincareView::PoincareView(QWidget* parent, const char* name, WFlags f)
- : QCanvasView(parent, name, f), DiagramView(), viewMode_(NORMAL), showFrame_ (false)
+PoincareView::PoincareView(QWidget* parent, const char* name, Qt::WFlags f)
+ : Q3CanvasView(parent, name, f), DiagramView(), viewMode_(NORMAL), showFrame_ (false)
 {
     QObject::connect(docViewer, SIGNAL(onDocumentChange(unsigned int, unsigned long)),
                     this, SLOT(onDocumentChange()));
     QObject::connect(docViewer, SIGNAL(onDocumentFirstChange(unsigned int, unsigned long)),
                     this, SLOT(onDocumentChange()));
     
-    canvas_ = new QCanvas(PoincareView::canvasWidth_, PoincareView::canvasHeight_);
+    canvas_ = new Q3Canvas(PoincareView::canvasWidth_, PoincareView::canvasHeight_);
     this->setCanvas(canvas_);
 
     defaultView.scale(0.87,0.87); //zoom out slightly to see the diagram properly
@@ -72,15 +75,15 @@ PoincareView::~PoincareView()
 void PoincareView::print(QPainter& p)
 {
     //fit to page printing -- ref: http://lists.trolltech.com/qt-interest/2004-12/thread00656-0.html 
-    QPaintDeviceMetrics pmetrics( p.device() );
+    Q3PaintDeviceMetrics pmetrics( p.device() );
     int pageWidth = pmetrics.width();
     int pageHeight = pmetrics.height();
     
     //find out the bounding rectangle of all the canvas items
     //so that we can scale the design to fit the page
     QRect bounding;
-    QCanvasItemList items = canvas()->allItems();
-    QCanvasItemList::iterator it;
+    Q3CanvasItemList items = canvas()->allItems();
+    Q3CanvasItemList::iterator it;
     for(it = items.begin(); it != items.end(); ++it) {
         bounding = bounding.unite( (*it)->boundingRect() );
     }
@@ -97,7 +100,7 @@ void PoincareView::saveAs(QString fileName)
 {
     QPainter painter;
     QPixmap pix;
-    QCanvas* c = canvas();
+    Q3Canvas* c = canvas();
     pix.resize(c->width(), c->height());
     painter.begin(&pix);
     c->drawArea(QRect(0,0,c->width(), c->height()), &painter);
@@ -127,7 +130,7 @@ void PoincareView::pan ( PanType ptype )
     else if(PAN_DOWN == ptype)
         vScroll = -canvasHeight()/stepSize;
     if(hScroll || vScroll) {
-        QWMatrix wm = worldMatrix();
+        QMatrix wm = worldMatrix();
         wm.translate(hScroll,vScroll);
         setWorldMatrix(wm);
         updateContents();
@@ -137,7 +140,7 @@ void PoincareView::pan ( PanType ptype )
 
 void PoincareView::zoom(ZoomType type)
 {
-    QWMatrix m = worldMatrix();
+    QMatrix m = worldMatrix();
     if(IN == type) {
         m.scale(1.1,1.1);
         setWorldMatrix(m);
@@ -263,8 +266,8 @@ void PoincareView::init()
     //then delete all actual items on the underlaying canvas
     //this will also delete the boundingCircle
     //but onNewDocument will recreate it
-    QCanvasItemList::iterator it;
-    QCanvasItemList itemList = canvas()->allItems();
+    Q3CanvasItemList::iterator it;
+    Q3CanvasItemList itemList = canvas()->allItems();
     for(it= itemList.begin(); it != itemList.end(); ++it) {
         (*it)->hide(); //this is needed
         delete *it;
@@ -275,7 +278,7 @@ void PoincareView::init()
 void PoincareView::drawBoundingCircle(bool visible, bool init)
 {
     if(init) {
-        disk = new QCanvasEllipse(diameter(), diameter(), canvas());
+        disk = new Q3CanvasEllipse(diameter(), diameter(), canvas());
         disk->setBrush(QColor(0xf6,0xeb, 0x70));
         disk->setX(origin().x());
         disk->setY(origin().y());
@@ -351,7 +354,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     
     QPen pen(dgram->colorMapVal(e->cid()));
     if(e->lineStyle() == DOTS) {
-        pen.setStyle(DotLine);
+        pen.setStyle(Qt::DotLine);
     }
     //Initialization
     //TODO handle filled/not-filled, (assumes filled for now)
@@ -378,7 +381,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     else if(EUCLID_POLY == e->type()) {
         //There are n points, last point should be joined to first
         CanvasPoly* poly = new CanvasPoly(canvas());
-        QPointArray pa(e->numPoints());
+        Q3PointArray pa(e->numPoints());
         QPoint pt;
         int i=0;
         for(i=0; i<e->numPoints(); ++i) {
@@ -401,7 +404,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     }
     else if(EUCLID_POLYLINE == e->type()) {
         CanvasPolyLine* polyline = new CanvasPolyLine(canvas());
-        QPointArray pa(e->numPoints());
+        Q3PointArray pa(e->numPoints());
         QPoint pt;
         int i=0;
         for(i=0; i<e->numPoints(); ++i) {

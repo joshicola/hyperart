@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __QDOCUMENT_H__
 #define __QDOCUMENT_H__
 
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qobject.h>
 
 
@@ -86,7 +86,7 @@ class QDocument : public QObject {
   virtual ~QDocument();
 
  private:	// private variables
-  QPtrList<QObject*> *m_rgViews;
+  Q3PtrList<QObject*> *m_rgViews;
   bool modifiedFlag;
   bool firstUpdate;
   

@@ -19,52 +19,53 @@
  ***************************************************************************/
 
 #include "canvaselements.h"
-#include <qpointarray.h>
+#include <q3pointarray.h>
 
 #include <iostream>
 #include <cmath>
 using namespace std;
 
-CanvasPolyLine::CanvasPolyLine(QCanvas* canvas)
-    : QCanvasPolygon(canvas)
+CanvasPolyLine::CanvasPolyLine(Q3Canvas *canvas)
+    : Q3CanvasPolygon(canvas)
 {
 }
 
-void CanvasPolyLine::drawShape(QPainter& painter)
+void CanvasPolyLine::drawShape(QPainter &painter)
 {
-   painter.setPen( pen() );
-   painter.setBrush( NoBrush );
-   painter.drawPolyline(poly);
-}
-
-//============================================================================
-CanvasPoly::CanvasPoly(QCanvas* canvas, bool fill)
-    : QCanvasPolygon(canvas), filled_(fill)
-{
-}
-
-void CanvasPoly::drawShape(QPainter& painter)
-{
-   painter.setPen( pen() );
-   painter.setBrush( brush() );
-   if(filled_)
-    painter.drawPolygon(poly);
-   else {
+    painter.setPen(pen());
+    painter.setBrush(Qt::NoBrush);
     painter.drawPolyline(poly);
-    painter.drawLine(poly.point(poly.size()-1), poly.point(0));
-   }
+}
+
+//============================================================================
+CanvasPoly::CanvasPoly(Q3Canvas *canvas, bool fill)
+    : Q3CanvasPolygon(canvas), filled_(fill)
+{
+}
+
+void CanvasPoly::drawShape(QPainter &painter)
+{
+    painter.setPen(pen());
+    painter.setBrush(brush());
+    if (filled_)
+        painter.drawPolygon(poly);
+    else
+    {
+        painter.drawPolyline(poly);
+        painter.drawLine(poly.point(poly.size() - 1), poly.point(0));
+    }
 }
 
 //============================================================================
 
-void CanvasEllipse::drawShape(QPainter& painter)
+void CanvasEllipse::drawShape(QPainter &painter)
 {
-   painter.setPen( pen() );
-   painter.setBrush( brush() );
-   if(filled_) 
-    painter.drawEllipse(x(), y(), width(), height());
-   else
-    painter.drawArc(x(), y(), width(), height(), 0, 360*16);
+    painter.setPen(pen());
+    painter.setBrush(brush());
+    if (filled_)
+        painter.drawEllipse(x(), y(), width(), height());
+    else
+        painter.drawArc(x(), y(), width(), height(), 0, 360 * 16);
 }
 //============================================================================
 
@@ -73,7 +74,7 @@ CanvasHyperLine::CanvasHyperLine()
 {
 }
 
-void CanvasHyperLine::setParameters(const QPoint& topleft, const QSize& size, int startAngle, int alen)
+void CanvasHyperLine::setParameters(const QPoint &topleft, const QSize &size, int startAngle, int alen)
 {
     rect_.setTopLeft(topleft);
     rect_.setWidth(size.width());
@@ -82,38 +83,40 @@ void CanvasHyperLine::setParameters(const QPoint& topleft, const QSize& size, in
     angle2_ = alen;
     approximate_ = false;
 
-    //find out the bounding rectangle using the points in the arc
-    QPointArray points;
-    points.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1_*16, angle2_*16);
+    // find out the bounding rectangle using the points in the arc
+    Q3PointArray points;
+    points.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1_ * 16, angle2_ * 16);
     boundingRect_ = points.boundingRect();
 }
 
-void CanvasHyperLine::setParamters(const QPoint& a, const QPoint& b)
+void CanvasHyperLine::setParamters(const QPoint &a, const QPoint &b)
 {
     a_ = a;
     b_ = b;
     approximate_ = true;
-    QPointArray pa(2);
+    Q3PointArray pa(2);
     pa.setPoint(0, a_);
     pa.setPoint(1, b_);
     boundingRect_ = pa.boundingRect();
 }
 
-void CanvasHyperLine::drawShape(QPainter& painter)
+void CanvasHyperLine::drawShape(QPainter &painter)
 {
-    if(approximate_) {
-        painter.drawLine(a_,b_);
+    if (approximate_)
+    {
+        painter.drawLine(a_, b_);
     }
-    else {
-        painter.drawArc(rect_, angle1_*16, angle2_*16);
+    else
+    {
+        painter.drawArc(rect_, angle1_ * 16, angle2_ * 16);
     }
 }
 
 //============================================================================
 
-//TODO destructor??
-CanvasHyperPolyLine::CanvasHyperPolyLine(QCanvas* canvas)
-    : QCanvasPolygonalItem(canvas)
+// TODO destructor??
+CanvasHyperPolyLine::CanvasHyperPolyLine(Q3Canvas *canvas)
+    : Q3CanvasPolygonalItem(canvas)
 {
 }
 
@@ -122,31 +125,34 @@ CanvasHyperPolyLine::~CanvasHyperPolyLine()
     lines_.clear();
 }
 
-void CanvasHyperPolyLine::addLine(CanvasHyperLine* line) 
+void CanvasHyperPolyLine::addLine(CanvasHyperLine *line)
 {
-    //line->setCanvas(canvas());
+    // line->setCanvas(canvas());
     lines_.push_back(line);
-    if(lines_.size() > 1) {
+    if (lines_.size() > 1)
+    {
         boundingRect_ = boundingRect_.unite(line->boundingRect());
     }
-    else { //first time setting
+    else
+    { // first time setting
         boundingRect_ = line->boundingRect();
     }
 }
 
-void CanvasHyperPolyLine::drawShape(QPainter& painter)
+void CanvasHyperPolyLine::drawShape(QPainter &painter)
 {
     painter.setPen(pen());
-    painter.setBrush(NoBrush);
-    vector<CanvasHyperLine*>::iterator iter;
-    for(iter = lines_.begin(); iter != lines_.end(); ++iter) {
+    painter.setBrush(Qt::NoBrush);
+    vector<CanvasHyperLine *>::iterator iter;
+    for (iter = lines_.begin(); iter != lines_.end(); ++iter)
+    {
         (*iter)->draw(painter);
     }
 }
 
-QPointArray CanvasHyperPolyLine::areaPoints() const
+Q3PointArray CanvasHyperPolyLine::areaPoints() const
 {
-    QPointArray points(4);
+    Q3PointArray points(4);
     points.setPoint(0, boundingRect_.topLeft());
     points.setPoint(1, boundingRect_.topRight());
     points.setPoint(2, boundingRect_.bottomRight());
@@ -155,34 +161,38 @@ QPointArray CanvasHyperPolyLine::areaPoints() const
 }
 
 //============================================================================
-void CanvasHyperPoly::addLine(CanvasHyperLine* l) 
+void CanvasHyperPoly::addLine(CanvasHyperLine *l)
 {
     CanvasHyperPolyLine::addLine(l);
-    //add points of arc/straight line to approximate us with a euclid polygon
-    if(l->isApproximated()) {
+    // add points of arc/straight line to approximate us with a euclid polygon
+    if (l->isApproximated())
+    {
         points_.putPoints(int(points_.count()), 2, l->a().x(), l->a().y(), l->b().x(), l->b().y());
     }
-    else {
-        QPointArray pNew;
+    else
+    {
+        Q3PointArray pNew;
         QPoint topleft = l->topLeft();
         QSize size = l->size();
         int angle1 = l->startAngle(), angle2 = l->lenAngle();
-        QPointArray pOrig;
-        pOrig.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1*16, angle2*16);
-        unsigned int pointsInSegment = pOrig.count()/8;
-        if(pointsInSegment == 0) pointsInSegment=1;
-        for(unsigned int i=0,j=0; i<pOrig.count(); i += pOrig.count()/pointsInSegment, j++) {
+        Q3PointArray pOrig;
+        pOrig.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1 * 16, angle2 * 16);
+        unsigned int pointsInSegment = pOrig.count() / 8;
+        if (pointsInSegment == 0)
+            pointsInSegment = 1;
+        for (unsigned int i = 0, j = 0; i < pOrig.count(); i += pOrig.count() / pointsInSegment, j++)
+        {
             pNew.putPoints(j, 1, pOrig.point(i).x(), pOrig.point(i).y());
         }
         points_.putPoints(int(points_.count()), pNew.count(), pNew);
     }
 }
 
-void CanvasHyperPoly::drawShape(QPainter& painter)
+void CanvasHyperPoly::drawShape(QPainter &painter)
 {
     painter.setPen(pen());
     painter.setBrush(brush());
-    if(filled_)
+    if (filled_)
         painter.drawPolygon(points_);
     else
         painter.drawPolyline(points_);

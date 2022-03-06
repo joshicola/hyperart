@@ -21,13 +21,13 @@
 #define PATTERN_H
 
 #include <qmap.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include "defs.h"
 #include "element.h"
 #include "transformation.h"
 
-typedef QValueList< ElementPtr > ElemList;
-typedef QValueList< ElementPtr >::iterator ElemListIter;
+typedef Q3ValueList< ElementPtr > ElemList;
+typedef Q3ValueList< ElementPtr >::iterator ElemListIter;
 /**
 Pattern is a set of Elements.
 It can be used to represent fundametal region or a pgon or layers, basically any collection of Elements.

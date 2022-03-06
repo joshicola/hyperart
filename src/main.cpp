@@ -20,7 +20,7 @@
 
 
 #include <qapplication.h>
-#include "hyperart.ui.h"
+#include "hyperart.h"
 
 int main( int argc, char ** argv ) {
     QApplication a( argc, argv );

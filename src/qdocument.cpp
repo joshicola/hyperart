@@ -22,13 +22,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "qdocument.h"
 #include "qdocviewer.h"
+//Added by qt3to4:
+#include <Q3PtrList>
 
 
 
 
 QDocument::QDocument() 
 {
-    m_rgViews    = new QPtrList<QObject*>;
+    m_rgViews    = new Q3PtrList<QObject*>;
     modifiedFlag = false;
     firstUpdate  = true;
 } // !QDocument()
@@ -54,7 +56,7 @@ bool QDocument::addView(QObject* newView)
     if (!m_rgViews) 
     {
 	qWarning("QDocument::addView: view structure invalid");
-	m_rgViews = new QPtrList<QObject*>;
+	m_rgViews = new Q3PtrList<QObject*>;
     }
 
     if (!newView) {
@@ -78,7 +80,7 @@ bool QDocument::removeView(QObject* oldView)
     if (!m_rgViews) 
     {
 	qWarning("QDocument::removeView: view structure invalid");
-	m_rgViews = new QPtrList<QObject*>;
+	m_rgViews = new Q3PtrList<QObject*>;
     }
 
     if (!oldView) 

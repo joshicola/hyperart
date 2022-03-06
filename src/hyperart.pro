@@ -43,7 +43,8 @@ SOURCES	+= canvaselements.cpp \
 	diagramview.cpp \
 	irregularpgon.cpp
 
-FORMS	= hyperart.ui
+#The following line was changed from FORMS to FORMS3 by qt3to4
+FORMS3	= hyperart.ui
 
 IMAGES	= butter.xpm \
 	fileopen.xpm \
@@ -64,3 +65,8 @@ IMAGES	= butter.xpm \
 # Target is an application:  ./hyperart
 
 TARGET = ./hyperart
+#The following line was inserted by qt3to4
+QT += xml  qt3support 
+#The following line was inserted by qt3to4
+CONFIG += uic3
+

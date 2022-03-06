@@ -1,0 +1,15 @@
+[Project]
+VersionControlSupport=kdevgit
+
+[QMake_Builder]
+Build_Folder=/media/josher/HeavyStorage/Projects/2021.12.16.HyperArt/Code/hyperart/src/build
+Build_Type=0
+Extra_Arguments=
+Install_Prefix=
+QMake_Binary=/usr/bin/qmake
+
+[QMake_Builder][/media/josher/HeavyStorage/Projects/2021.12.16.HyperArt/Code/hyperart/src/build]
+Build_Type=0
+Extra_Arguments=
+Install_Prefix=
+QMake_Binary=/usr/bin/qmake

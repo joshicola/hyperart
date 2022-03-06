@@ -21,9 +21,11 @@
 #define LAYER_H
 
 #include "pattern.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 
-typedef QValueList<PatternPtr> PatternList;
-typedef QValueList<PatternPtr>::iterator PatternListIter;
+typedef Q3ValueList<PatternPtr> PatternList;
+typedef Q3ValueList<PatternPtr>::iterator PatternListIter;
 
 /**
 Layer is used to group patterns. It is useful to view different layers of the diagram.
