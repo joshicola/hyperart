@@ -21,7 +21,7 @@
 #include <qfileinfo.h>
 #include <q3paintdevicemetrics.h>
 //Added by qt3to4:
-#include <Q3PointArray>
+#include <QPolygon>
 #include <QPixmap>
 using namespace Qt;
 //============================================================================
@@ -381,7 +381,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     else if(EUCLID_POLY == e->type()) {
         //There are n points, last point should be joined to first
         CanvasPoly* poly = new CanvasPoly(canvas());
-        Q3PointArray pa(e->numPoints());
+        QPolygon pa(e->numPoints());
         QPoint pt;
         int i=0;
         for(i=0; i<e->numPoints(); ++i) {
@@ -404,7 +404,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     }
     else if(EUCLID_POLYLINE == e->type()) {
         CanvasPolyLine* polyline = new CanvasPolyLine(canvas());
-        Q3PointArray pa(e->numPoints());
+        QPolygon pa(e->numPoints());
         QPoint pt;
         int i=0;
         for(i=0; i<e->numPoints(); ++i) {

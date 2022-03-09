@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "canvaselements.h"
-#include <q3pointarray.h>
+#include <QPainterPath>
 
 #include <iostream>
 #include <cmath>
@@ -84,7 +84,7 @@ void CanvasHyperLine::setParameters(const QPoint &topleft, const QSize &size, in
     approximate_ = false;
 
     // find out the bounding rectangle using the points in the arc
-    Q3PointArray points;
+    QPolygon points;
     points.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1_ * 16, angle2_ * 16);
     boundingRect_ = points.boundingRect();
 }
@@ -94,7 +94,7 @@ void CanvasHyperLine::setParamters(const QPoint &a, const QPoint &b)
     a_ = a;
     b_ = b;
     approximate_ = true;
-    Q3PointArray pa(2);
+    QPolygon pa(2);
     pa.setPoint(0, a_);
     pa.setPoint(1, b_);
     boundingRect_ = pa.boundingRect();
@@ -150,9 +150,9 @@ void CanvasHyperPolyLine::drawShape(QPainter &painter)
     }
 }
 
-Q3PointArray CanvasHyperPolyLine::areaPoints() const
+QPolygon CanvasHyperPolyLine::areaPoints() const
 {
-    Q3PointArray points(4);
+    QPolygon points(4);
     points.setPoint(0, boundingRect_.topLeft());
     points.setPoint(1, boundingRect_.topRight());
     points.setPoint(2, boundingRect_.bottomRight());
@@ -171,11 +171,11 @@ void CanvasHyperPoly::addLine(CanvasHyperLine *l)
     }
     else
     {
-        Q3PointArray pNew;
+        QPainterPath pNew;
         QPoint topleft = l->topLeft();
         QSize size = l->size();
         int angle1 = l->startAngle(), angle2 = l->lenAngle();
-        Q3PointArray pOrig;
+        QPainterPath pOrig;
         pOrig.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1 * 16, angle2 * 16);
         unsigned int pointsInSegment = pOrig.count() / 8;
         if (pointsInSegment == 0)

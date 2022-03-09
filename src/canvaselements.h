@@ -26,7 +26,7 @@
 #include <qpoint.h>
 #include <qsize.h>
 //Added by qt3to4:
-#include <Q3PointArray>
+#include <QPolygon>
 #include "defs.h"
 
 /**
@@ -128,7 +128,7 @@ public:
     virtual ~CanvasHyperPolyLine();
     void addLine(CanvasHyperLine* line);
     virtual int rtti() const { return HYPER_POLYLINE; }
-    virtual Q3PointArray areaPoints() const;
+    virtual QPolygon areaPoints() const;
     /**
     Doesn't make sense to use this without calling setLines() method first
     */
@@ -156,7 +156,7 @@ public:
     void setFilled(bool f) { filled_ = f; }
 protected:
     virtual void drawShape(QPainter &painter);
-    Q3PointArray points_;
+    QPolygon points_;
     bool filled_;
 };
 //===========================================================================

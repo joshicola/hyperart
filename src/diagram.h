@@ -35,12 +35,13 @@ It provides a common interface for different types of diagrams (regular pgon, ir
 
 @author Ajit Datar
 */
-class Diagram : public QDocument {
+class Diagram : public QDocument
+{
 public:
     Diagram();
 
     virtual ~Diagram();
-    
+
     /**
     Init should be called whenever a new data is fed to the object.
     Eg. The DataReader would do so after successfully reading
@@ -54,26 +55,26 @@ public:
     Eg. The DataReader would call this before reading in new file.
     */
     virtual void clear();
-    
+
     /**
     This is where the diagram generation algorithm goes.
     It should implement the Pattern replication algorithm.
     */
-    virtual void make()=0;
-    
+    virtual void make() = 0;
+
     /**
     Dervied classes should provide their own type
     */
     virtual DiagramType type() { return DIAGRAM; }
-    
-    //get methods
+
+    // get methods
     virtual int p() { return p_; }
     virtual QColor colorMapVal(size_type cid) const;
     virtual int numLayers() { return numLayers_; }
-    virtual Pattern& fundPat() { return fundPat_; }
+    virtual Pattern &fundPat() { return fundPat_; }
     int numColors() const { return numColors_; }
 
-    virtual PatternPtr pattern(PatId id) { return diag_[ id ]; }
+    virtual PatternPtr pattern(PatId id) { return diag_[id]; }
     /**
     Get all the pattern in the diagram
     */
@@ -81,36 +82,38 @@ public:
     /**
     Get all the patterns in a layer
     */
-    virtual PatternList layerPatterns(int layerid); 
+    virtual PatternList layerPatterns(int layerid);
 
-    //set methods
+    // set methods
     virtual void setP(int v);
     virtual void setNumColors(int v);
-    virtual void setColorMapVal( size_type cid, QColor color);
+    virtual void setColorMapVal(size_type cid, QColor color);
     virtual void setNumLayers(int la) { numLayers_ = la; }
-protected: //methods
+
+protected: // methods
     /**
     Adds the pattern to diagram. Pattern is added to layer 'layerid'
     */
-    void addPattern(int layerid, Pattern& pat);
+    void addPattern(int layerid, Pattern &pat);
 
-public: //data
+public: // data
     vector<PgonEdge> edges;
-    /** 
+    /**
     maintains patterns in the order in which they were created.
     used by the step thru animation.
     */
-    vector< PatId > animq;
-protected: //data
+    vector<PatId> animq;
+
+protected: // data
     QString fileName_;
     int p_;
-    
+
     int numColors_;
-    Pattern fundPat_; //fundametal pattern
-    
-    //setNumColors has to be called to initialize these
+    Pattern fundPat_; // fundametal pattern
+
+    // setNumColors has to be called to initialize these
     ColorMap colorMap;
-    
+
     /**
     Number of Layers to generate
     */
@@ -118,8 +121,8 @@ protected: //data
     /**
     diag_ is collection of all the patterns.
     */
-    QMap< PatId, PatternPtr> diag_;
-    vector< Layer > layers_; 
+    QMap<PatId, PatternPtr> diag_;
+    vector<Layer> layers_;
 };
 
 #endif
