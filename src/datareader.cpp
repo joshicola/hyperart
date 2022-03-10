@@ -10,7 +10,7 @@
 #include <qfile.h>
 #include <qcolor.h>
 // Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 #include "datareader.h"
 #include "diagram.h"
 
@@ -29,7 +29,7 @@ bool DataReader::collectXML(const QString &fileName)
         return false;
 
     QString line = "";
-    Q3TextStream stream(&f);
+    QTextStream stream(&f);
     DataReader::xmlText = "";
     while (!stream.atEnd())
     {

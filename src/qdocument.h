@@ -18,14 +18,11 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-
 #ifndef __QDOCUMENT_H__
 #define __QDOCUMENT_H__
 
 #include <q3ptrlist.h>
 #include <qobject.h>
-
-
 
 /**
  * @class    QDocument
@@ -39,7 +36,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *    <li> managing an arbitrary number of docViewers
  *    <li> notify the managed docViewers of changes on demand
  *  </ul>
- * 
+ *
  * example implementation for the document class:
  * At first, the class definition:
  * @code
@@ -55,26 +52,22 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * The implementation of this definition is as easy as it gets:
  * @code
  * #include "QDocImplementation.h"
- * #include <stdlib.h> 
- * 
- * 
+ * #include <stdlib.h>
+ *
+ *
  * QDocImplementation::QDocImplementation() {
  *   data = (char*)malloc(255);
- * 
+ *
  *   strcpy(data, "this is a test.");
  * }
  * @endcode
  */
 
-
-
-
-class QDocument : public QObject {
+class QDocument : public QObject
+{
   Q_OBJECT
 
- public:	// initialization
-
-	 
+public: // initialization
   /**
    *  initializes all child structures and local variables.
    */
@@ -85,23 +78,23 @@ class QDocument : public QObject {
    */
   virtual ~QDocument();
 
- private:	// private variables
-  Q3PtrList<QObject*> *m_rgViews;
+private: // private variables
+  QPtrList<QObject *> *m_rgViews;
   bool modifiedFlag;
   bool firstUpdate;
-  
- public:
-   /**
-    * Adds a new entry to the viewlist. This function is being called by
-    * QDocViewer::_register()
-    *
-    * @param    newView   view to be added to the list
-    *
-    * @return     TRUE, if the new view was added to the list
-    * 
-    * @see      removeView
-    */
-  bool addView(QObject* newView);
+
+public:
+  /**
+   * Adds a new entry to the viewlist. This function is being called by
+   * QDocViewer::_register()
+   *
+   * @param    newView   view to be added to the list
+   *
+   * @return     TRUE, if the new view was added to the list
+   *
+   * @see      removeView
+   */
+  bool addView(QObject *newView);
 
   /**
    * Removes a certain view from the viewlist. This function is being called
@@ -109,13 +102,12 @@ class QDocument : public QObject {
    *
    * @param
    *
-   * @return      true if the view was removed, false otherwise 
+   * @return      true if the view was removed, false otherwise
    *
    * @see    addView()
    */
-  bool removeView(QObject* oldView);
+  bool removeView(QObject *oldView);
 
-  
   /**
    * Iterator function. Returns the first view within the view list.
    * If no views exist, NULL is returned.
@@ -123,7 +115,7 @@ class QDocument : public QObject {
    * @return           pointer to the first view (aka docViewer) object
    * @see     getNextView()
    */
-  QObject* getFirstView();
+  QObject *getFirstView();
 
   /**
    * Another iterator function. getFirstView() shoul be called in advance to set
@@ -134,7 +126,7 @@ class QDocument : public QObject {
    *
    * @see     getFirstView()
    */
-  QObject* getNextView();
+  QObject *getNextView();
 
   /**
    * This function emits a change signal which should be received by all docViewers
@@ -147,7 +139,6 @@ class QDocument : public QObject {
    */
   bool updateAllViews(unsigned int wParam = 0, unsigned long lParam = 0);
 
-  
   /**
    * Returns whether the document has been modified since the last time the
    * document was saved.<br>
@@ -167,12 +158,12 @@ class QDocument : public QObject {
    *                         false, if the documents needs to be set to not-modified.
    *
    * @return         returns the previous value of the flag
-   * 
+   *
    * @see       isModified
    */
   bool setModifiedFlag(bool newValue);
 
- signals:
+signals:
   /**
    * Qt signal which is being emitted when the member updateAllViews() is executed.
    * When this is the first call to updateAllViews(), onFirstChange() is emitted
@@ -196,6 +187,5 @@ class QDocument : public QObject {
    */
   void onDocFirstChange(unsigned int wParam, unsigned long lParam);
 };
-
 
 #endif /* __QDOCUMENT_H__ */

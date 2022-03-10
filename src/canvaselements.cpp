@@ -25,8 +25,8 @@
 #include <cmath>
 using namespace std;
 
-CanvasPolyLine::CanvasPolyLine(Q3Canvas *canvas)
-    : Q3CanvasPolygon(canvas)
+CanvasPolyLine::CanvasPolyLine(QCanvas *canvas)
+    : QCanvasPolygon(canvas)
 {
 }
 
@@ -38,8 +38,8 @@ void CanvasPolyLine::drawShape(QPainter &painter)
 }
 
 //============================================================================
-CanvasPoly::CanvasPoly(Q3Canvas *canvas, bool fill)
-    : Q3CanvasPolygon(canvas), filled_(fill)
+CanvasPoly::CanvasPoly(QCanvas *canvas, bool fill)
+    : QCanvasPolygon(canvas), filled_(fill)
 {
 }
 
@@ -115,8 +115,8 @@ void CanvasHyperLine::drawShape(QPainter &painter)
 //============================================================================
 
 // TODO destructor??
-CanvasHyperPolyLine::CanvasHyperPolyLine(Q3Canvas *canvas)
-    : Q3CanvasPolygonalItem(canvas)
+CanvasHyperPolyLine::CanvasHyperPolyLine(QCanvas *canvas)
+    : QCanvasPolygonalItem(canvas)
 {
 }
 

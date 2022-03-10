@@ -118,7 +118,7 @@ public:
 
 protected:
     Element();
-    Q3ValueVector<Point> points_;
+    QValueVector<Point> points_;
     size_type cid_;
     bool filled_;
     bool open_;

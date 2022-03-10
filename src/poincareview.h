@@ -35,65 +35,68 @@ Poincare disk view of the diagram.
 All the drawing is done using a QCanvas.
 @author Ajit Datar
 */
-class PoincareView : public Q3CanvasView, public DiagramView
+class PoincareView : public QCanvasView, public DiagramView
 {
-Q_OBJECT
-public: //static methods
-    //static set methods
+    Q_OBJECT
+public: // static methods
+    // static set methods
     static int setDefaultCanvasHeight(int h);
     static int setDefaultCanvasWidth(int w);
-    
-    //static get methods
+
+    // static get methods
     static int canvasWidth() { return PoincareView::canvasWidth_; }
     static int canvasHeight() { return PoincareView::canvasHeight_; }
-    static int diameter() { return diameter_; } //poincare disk Diamater
+    static int diameter() { return diameter_; } // poincare disk Diamater
     static QPoint origin() { return origin_; }
-private: //static methods
+
+private: // static methods
     static int calcDiameter();
-private: //static data
+
+private: // static data
     static int canvasWidth_;
     static int canvasHeight_;
     static int diameter_;
-    static QPoint origin_; 
+    static QPoint origin_;
+
 public:
-    PoincareView(QWidget* parent=0, const char* name=0, Qt::WFlags f=0);
+    PoincareView(QWidget *parent = 0, const char *name = 0, Qt::WFlags f = 0);
 
     ~PoincareView();
-    void print(QPainter& p);
+    void print(QPainter &p);
     void saveAs(QString fileName);
-    //set methods
-private: //methods
+    // set methods
+private: // methods
     void init();
     /**
-    draws the poincare disk. 
+    draws the poincare disk.
     TODO Right now the background color is set to an arbitrary
     shade. Maybe this color should be specified in the input XML file.
     */
-    void drawBoundingCircle(bool visible=true, bool init = false);
-    void drawFrame(bool visible=true, bool init=false);
+    void drawBoundingCircle(bool visible = true, bool init = false);
+    void drawFrame(bool visible = true, bool init = false);
     void restoreDiagramState();
     /**
     draws the whole diagram showing all generated layers
     */
-    void drawDiagram(bool visible=true, bool init = false);
+    void drawDiagram(bool visible = true, bool init = false);
     /**
     draw only the given layer
     */
-    void drawLayer(const int layerId, bool visible=true, bool init = false);
+    void drawLayer(const int layerId, bool visible = true, bool init = false);
     /**
     Draws a pattern using the drawing framework.
     A pattern contains Elements. Elements are mapped to
     appropriate screen objects.
     calls drawElement for each element in the pattern.
     */
-    void drawPattern(const Pattern& pat, bool visible=true, bool init = false);
-    void drawPatternFrame(const Pattern& pat, bool visible=true, bool init = false);
+    void drawPattern(const Pattern &pat, bool visible = true, bool init = false);
+    void drawPatternFrame(const Pattern &pat, bool visible = true, bool init = false);
     /**
     All the points in the Element that is passed should be already transformed
     to their intended coords in the weierstrass/poincare model (this is the job of other
     funtions in the Diagram class). drawPattern will map it to the canvas coordinates and draw the elements.
     */
-    void drawElement(const ElementPtr e, bool visible=true, bool init = false);
+    void drawElement(const ElementPtr e, bool visible = true, bool init = false);
 private slots:
     void onDocumentChange();
     void zoom(ZoomType type);
@@ -106,24 +109,26 @@ private slots:
     void animPrev();
     void animateTimerDone();
     void pan(PanType ptype);
-private: //utility functions not part of the general view interface
+
+private: // utility functions not part of the general view interface
     /**
     Make a QPoint (screen point) from a Point
     Utility function. Used as a point on the QCanvas.
     */
-    QPoint makeQPoint(const Point& mp);
-    CanvasHyperLine* makeCanvasHyperLine(const HyperLine& mhl);
-private: //data
-    Q3Canvas* canvas_;
-    Q3CanvasEllipse* disk; //the poincare disk
+    QPoint makeQPoint(const Point &mp);
+    CanvasHyperLine *makeCanvasHyperLine(const HyperLine &mhl);
+
+private: // data
+    QCanvas *canvas_;
+    QCanvasEllipse *disk; // the poincare disk
     ViewMode viewMode_;
     QMatrix defaultView;
     bool showFrame_;
-    
+
     QMap<int, bool> isLayerVisible;
 
-    typedef QMap<UId, Q3CanvasItem*> ItemStore;
-    typedef QMap<UId, Q3CanvasItem*>::Iterator ItemStoreIter;
+    typedef QMap<UId, QCanvasItem *> ItemStore;
+    typedef QMap<UId, QCanvasItem *>::Iterator ItemStoreIter;
     ItemStore items_;
 
     QTimer *animateTimer;

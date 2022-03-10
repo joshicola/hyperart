@@ -18,50 +18,42 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-
-
 #include "qdocument.h"
 #include "qdocviewer.h"
-//Added by qt3to4:
-#include <Q3PtrList>
+// Added by qt3to4:
+#include <QPtrList>
 
-
-
-
-QDocument::QDocument() 
+QDocument::QDocument()
 {
-    m_rgViews    = new Q3PtrList<QObject*>;
+    m_rgViews = new QPtrList<QObject *>;
     modifiedFlag = false;
-    firstUpdate  = true;
+    firstUpdate = true;
 } // !QDocument()
 
-
-
-QDocument::~QDocument() 
+QDocument::~QDocument()
 {
     if (m_rgViews)
     {
-	delete m_rgViews;
-	m_rgViews = 0;
+        delete m_rgViews;
+        m_rgViews = 0;
     }
 } // !~QDocument()
 
-
-
-bool QDocument::addView(QObject* newView) 
+bool QDocument::addView(QObject *newView)
 {
-    QObject** previousCurrent = NULL;
+    QObject **previousCurrent = NULL;
 
     /* Fehler checken */
-    if (!m_rgViews) 
+    if (!m_rgViews)
     {
-	qWarning("QDocument::addView: view structure invalid");
-	m_rgViews = new Q3PtrList<QObject*>;
+        qWarning("QDocument::addView: view structure invalid");
+        m_rgViews = new QPtrList<QObject *>;
     }
 
-    if (!newView) {
-	qDebug("QDocument::addView: new view invalid");
-	return FALSE;
+    if (!newView)
+    {
+        qDebug("QDocument::addView: new view invalid");
+        return FALSE;
     }
 
     /* add the new view item to the list and jump back to the old position
@@ -73,74 +65,64 @@ bool QDocument::addView(QObject* newView)
     return TRUE;
 } // !addView()
 
-
-
-bool QDocument::removeView(QObject* oldView) 
+bool QDocument::removeView(QObject *oldView)
 {
-    if (!m_rgViews) 
+    if (!m_rgViews)
     {
-	qWarning("QDocument::removeView: view structure invalid");
-	m_rgViews = new Q3PtrList<QObject*>;
+        qWarning("QDocument::removeView: view structure invalid");
+        m_rgViews = new QPtrList<QObject *>;
     }
 
-    if (!oldView) 
+    if (!oldView)
     {
-	qDebug("QDocument::removeView: view invalid");
-	return FALSE;
+        qDebug("QDocument::removeView: view invalid");
+        return FALSE;
     }
 
     return m_rgViews->remove(&oldView);
 } // !removeView()
 
-
-
-QObject* QDocument::getFirstView() 
+QObject *QDocument::getFirstView()
 {
-    if (!m_rgViews) {
-	qDebug("QDocument: view structure invalid");
-	return 0;
+    if (!m_rgViews)
+    {
+        qDebug("QDocument: view structure invalid");
+        return 0;
     }
-		
+
     return *(m_rgViews->first());
 } // !getFirstView()
 
-
-
-QObject* QDocument::getNextView() 
+QObject *QDocument::getNextView()
 {
-    if (!m_rgViews) 
+    if (!m_rgViews)
     {
-	qWarning("QDocument: view structure invalid");
+        qWarning("QDocument: view structure invalid");
     }
 
     return *(m_rgViews->next());
 } // !getNextView()
 
-
-
-bool QDocument::updateAllViews(unsigned int wParam, unsigned long lParam) 
+bool QDocument::updateAllViews(unsigned int wParam, unsigned long lParam)
 {
-    if (!m_rgViews) return false;
+    if (!m_rgViews)
+        return false;
 
-    if (firstUpdate) 
+    if (firstUpdate)
     {
-	emit onDocFirstChange(wParam, lParam);
-	firstUpdate = false;
+        emit onDocFirstChange(wParam, lParam);
+        firstUpdate = false;
     }
     else
-	emit onDocChange(wParam, lParam);
-  
+        emit onDocChange(wParam, lParam);
+
     return true;
 } // !UpdateAllViews()
 
-
-
-bool QDocument::isModified() 
+bool QDocument::isModified()
 {
     return modifiedFlag;
 } // !IsModified()
-
-
 
 bool QDocument::setModifiedFlag(bool newValue)
 {
@@ -150,14 +132,3 @@ bool QDocument::setModifiedFlag(bool newValue)
 
     return oldValue;
 } // !SetModifiedFlag()
-
-
-
-
-
-
-
-
-
-
-

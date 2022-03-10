@@ -7,8 +7,8 @@
  *  name 'name' and widget flags set to 'f'.
  *
  */
-HyperArt::HyperArt(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : Q3MainWindow(parent, name, fl)
+HyperArt::HyperArt(QWidget *parent, const char *name, Qt::WindowFlags fl)
+    : QMainWindow(parent, name, fl)
 {
     setupUi(this);
 
@@ -33,4 +33,3 @@ void HyperArt::languageChange()
 {
     retranslateUi(this);
 }
-

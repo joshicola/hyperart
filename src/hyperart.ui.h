@@ -14,7 +14,7 @@
 #include <qstatusbar.h>
 #include "hyperart.h"
 // Added by qt3to4:
-#include <Q3PopupMenu>
+#include <QPopupMenu>
 #include <QKeyEvent>
 #include "defs.h"
 
@@ -32,7 +32,7 @@ void HyperArt::fileNew()
 
 void HyperArt::fileOpen()
 {
-  QString fn = Q3FileDialog::getOpenFileName(QString::null, "*.had", this);
+  QString fn = QFileDialog::getOpenFileName(QString::null, "*.had", this);
   if (!fn.isEmpty())
     load(fn);
   else
@@ -45,8 +45,8 @@ void HyperArt::fileSave()
 
 void HyperArt::fileSaveAs()
 {
-  Q3FileDialog *fd = new Q3FileDialog(this, "Save design as ...", true); // a modal file dialog
-  fd->setMode(Q3FileDialog::AnyFile);                                    // allow new filename creation
+  QFileDialog *fd = new QFileDialog(this, "Save design as ...", true); // a modal file dialog
+  fd->setMode(QFileDialog::AnyFile);                                   // allow new filename creation
   fd->setFilter("Images (*.png *.jpg)");
   QFileInfo fi(curFile);
   QString saveName = fi.baseName() + ".jpg";
@@ -195,7 +195,7 @@ void HyperArt::init()
   //(currently the only one implemented)
   viewLayerAction = new QAction(this, "viewLayerAction");
 
-  Q3PopupMenu *viewLayerPopupMenu = new Q3PopupMenu(this);
+  QPopupMenu *viewLayerPopupMenu = new QPopupMenu(this);
   View->insertItem(viewLayerAction->iconSet(), tr("&Layer"), viewLayerPopupMenu);
 
   numLayers = 3;
