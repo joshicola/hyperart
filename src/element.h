@@ -13,7 +13,7 @@
 #include "defs.h"
 #include <string>
 #include <math.h>
-#include <q3valuevector.h>
+#include <qvector.h>
 #include <qcolor.h>
 class Transformation;
 
@@ -91,7 +91,7 @@ public:
     virtual bool open() const { return open_; }
     virtual size_type cid() const { return cid_; }
     virtual size_type numPoints() const { return points_.size(); }
-    virtual Point &getPoint(size_type i) { return points_.at(i); }
+    virtual Point getPoint(size_type i) { return points_.at(i); }
     virtual const Point &getPoint(size_type i) const { return points_.at(i); }
     virtual ElemType type() const = 0;
     virtual UId id() const { return id_; }
@@ -118,7 +118,7 @@ public:
 
 protected:
     Element();
-    QValueVector<Point> points_;
+    QVector<Point> points_;
     size_type cid_;
     bool filled_;
     bool open_;

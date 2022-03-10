@@ -3,7 +3,7 @@ LANGUAGE	= C++
 
 CONFIG	+= debug warn_on qt thread staticlib
 
-HEADERS	+= canvaselements.h \
+HEADERS	+= \ # canvaselements.h \
 	datareader.h \
 	defs.h \
 	diagram.h \
@@ -19,11 +19,11 @@ HEADERS	+= canvaselements.h \
 	qdocviewer.h \
 	regularpgon.h \
 	transformation.h \
-	hyperart.ui.h \
+	# hyperart.ui.h \
 	diagramview.h \
 	irregularpgon.h
 
-SOURCES	+= canvaselements.cpp \
+SOURCES	+= \ #canvaselements.cpp \
 	datareader.cpp \
 	diagram.cpp \
 	element.cpp \
@@ -65,8 +65,5 @@ IMAGES	= butter.xpm \
 # Target is an application:  ./hyperart
 
 TARGET = ./hyperart
-#The following line was inserted by qt3to4
-QT += xml  qt3support 
-#The following line was inserted by qt3to4
-CONFIG += uic3
+
 

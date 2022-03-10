@@ -20,8 +20,8 @@
 #include "layer.h"
 
 void Layer::removePattern(const UId patId)
-{ 
-    patterns_.erase(patId);
+{
+    patterns_.remove(patId);
 }
 
 void Layer::addPattern(const PatternPtr pat)
@@ -31,8 +31,5 @@ void Layer::addPattern(const PatternPtr pat)
 
 void Layer::clear()
 {
-    patterns_.clear(); 
+    patterns_.clear();
 }
-
-
-

@@ -18,15 +18,15 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-
-#include <qapplication.h>
+#include <QtWidgets/qapplication.h>
 #include "hyperart.h"
 
-int main( int argc, char ** argv ) {
-    QApplication a( argc, argv );
-    HyperArt * mw = new HyperArt();
-    mw->setCaption( "HyperArt" );
+int main(int argc, char **argv)
+{
+    QApplication a(argc, argv);
+    Ui::HyperArt *mw = new Ui::HyperArt();
+    mw->setCaption("HyperArt");
     mw->show();
-    a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
+    a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
     return a.exec();
 }

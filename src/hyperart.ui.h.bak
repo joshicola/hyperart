@@ -10,7 +10,7 @@
 ** destructor.
 *****************************************************************************/
 
-#include <q3filedialog.h>
+#include <qfiledialog.h>
 #include <qstatusbar.h>
 #include "hyperart.h"
 // Added by qt3to4:

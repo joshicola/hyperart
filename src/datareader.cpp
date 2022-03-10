@@ -185,7 +185,7 @@ bool DataReader::readColor(Diagram *m, QDomNode &root)
                 QDomText text = node.firstChild().toText();
                 if (!text.isNull())
                 {
-                    c = "#" + text.nodeValue().stripWhiteSpace();
+                    c = "#" + text.nodeValue().trimmed();
                     readOk = true;
                 }
             }
@@ -257,7 +257,7 @@ bool DataReader::readEntry(Diagram *m, QDomNode &root)
                 readOk = false;
                 if (!text.isNull())
                 {
-                    m->edges[e].setOrientation(orienMap[text.nodeValue().stripWhiteSpace()]);
+                    m->edges[e].setOrientation(orienMap[text.nodeValue().trimmed()]);
                     readOk = true;
                 }
             }
@@ -326,7 +326,7 @@ bool DataReader::readElem(Diagram *m, QDomNode &root)
                 readOk = false;
                 if (!text.isNull())
                 {
-                    if (text.nodeValue().stripWhiteSpace() == "true")
+                    if (text.nodeValue().trimmed() == "true")
                     {
                         e->setFilled(true);
                     }
@@ -504,7 +504,7 @@ Diagram *DataReaderRegularPgon::readXML(QDomDocument &doc)
                 QDomText text = node.firstChild().toText();
                 if (!text.isNull())
                 {
-                    m->setReflSym(reflSymMap[text.nodeValue().stripWhiteSpace()]);
+                    m->setReflSym(reflSymMap[text.nodeValue().trimmed()]);
                 }
                 readOk = true;
             }

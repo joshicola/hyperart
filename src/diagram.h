@@ -31,7 +31,8 @@
 
 /**
 Diagram is the Document class (ref: Document/View/Controller architecture)
-It provides a common interface for different types of diagrams (regular pgon, irregular pgon). Each type of Diagram should be a derived class of this.
+It provides a common interface for different types of diagrams
+(regular pgon, irregular pgon). Each type of Diagram should be a derived class of this.
 
 @author Ajit Datar
 */

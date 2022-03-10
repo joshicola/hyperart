@@ -20,7 +20,7 @@
 #ifndef POINCAREVIEW_H
 #define POINCAREVIEW_H
 
-#include <q3canvas.h>
+#include <qcanvas.h>
 #include <qtimer.h>
 #include "canvaselements.h"
 #include "qdocviewer.h"

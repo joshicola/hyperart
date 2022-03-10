@@ -21,7 +21,7 @@
 #ifndef CANVASELEMENTS_H
 #define CANVASELEMENTS_H
 
-#include <q3canvas.h>
+#include <canvas.h>
 #include <qpainter.h>
 #include <qpoint.h>
 #include <qsize.h>

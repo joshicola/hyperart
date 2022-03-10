@@ -11,7 +11,7 @@
 #define DATAREADER_H
 
 #include <qobject.h>
-#include <qdom.h>
+#include <QtXml/qdom.h>
 #include <qmap.h>
 #include "defs.h"
 #include "permutation.h"

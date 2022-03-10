@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "poincareview.h"
 #include <qfileinfo.h>
-#include <q3paintdevicemetrics.h>
+#include <qpaintdevicemetrics.h>
 // Added by qt3to4:
 #include <QPolygon>
 #include <QPixmap>

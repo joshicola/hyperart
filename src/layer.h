@@ -22,10 +22,10 @@
 
 #include "pattern.h"
 // Added by qt3to4:
-#include <QValueList>
+#include <QList>
 
-typedef QValueList<PatternPtr> PatternList;
-typedef QValueList<PatternPtr>::iterator PatternListIter;
+typedef QList<PatternPtr> PatternList;
+typedef QList<PatternPtr>::iterator PatternListIter;
 
 /**
 Layer is used to group patterns. It is useful to view different layers of the diagram.

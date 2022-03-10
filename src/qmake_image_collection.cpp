@@ -23,8 +23,8 @@
 
 #include <qimage.h>
 #include <qmime.h>
-#include <q3mimefactory.h>
-#include <q3dragobject.h>
+#include <qmimefactory.h>
+#include <qdragobject.h>
 
 // butter.xpm
 static const unsigned char image_0_data[] = {

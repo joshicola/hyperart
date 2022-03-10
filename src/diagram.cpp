@@ -20,7 +20,7 @@
 #include "diagram.h"
 
 Diagram::Diagram()
- : QDocument()
+    : QDocument()
 {
 }
 
@@ -31,22 +31,23 @@ Diagram::~Diagram()
 
 QColor Diagram::colorMapVal(size_type cid) const
 {
-    //TODO validation
+    // TODO validation
     return colorMap[cid];
 }
 
 void Diagram::setP(int v)
-{ 
+{
     p_ = v;
 
-    for(int i=0; i< p_; i++) {
+    for (int i = 0; i < p_; i++)
+    {
         PgonEdge e;
         e.setNumColors(numColors_);
         edges.push_back(e);
     }
 }
 
-void Diagram::setNumColors(int v) 
+void Diagram::setNumColors(int v)
 {
     numColors_ = v;
     colorMap.resize(numColors_);
@@ -54,7 +55,7 @@ void Diagram::setNumColors(int v)
 
 void Diagram::setColorMapVal(size_type cid, QColor color)
 {
-    //TODO validation
+    // TODO validation
     colorMap[cid] = color;
 }
 
@@ -64,11 +65,13 @@ void Diagram::clear()
     numColors_ = 0;
     fundPat_.clear();
     QMap<PatId, PatternPtr>::iterator it;
-    for(it=diag_.begin(); it != diag_.end(); ++it) {
-        delete it.data();
+    for (it = diag_.begin(); it != diag_.end(); ++it)
+    {
+        delete it.value();
     }
     diag_.clear();
-    for(unsigned int i=0; i<layers_.size(); i++) {
+    for (unsigned int i = 0; i < layers_.size(); i++)
+    {
         layers_[i].clear();
     }
     animq.clear();
@@ -77,15 +80,15 @@ void Diagram::clear()
 
 PatternList Diagram::layerPatterns(int layerid)
 {
-    //TODO do a bounds check
+    // TODO do a bounds check
     return layers_[layerid].patterns();
 }
 
-void Diagram::addPattern(int layerid, Pattern& pat)
+void Diagram::addPattern(int layerid, Pattern &pat)
 {
     PatternPtr clone = pat.clone();
-    PatId id(layerid, clone->id()); //copy assignment of pattern should keep the same id
-    diag_[ id ] = clone;
+    PatId id(layerid, clone->id()); // copy assignment of pattern should keep the same id
+    diag_[id] = clone;
     layers_[layerid].addPattern(clone);
     animq.push_back(id);
 }
