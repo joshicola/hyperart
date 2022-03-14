@@ -147,7 +147,7 @@
   <action name="fileNewAction">
    <property name="icon">
     <iconset>
-     <normaloff>image1</normaloff>image1</iconset>
+     <normaloff>butter.xpm</normaloff>butter.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;New</string>
@@ -165,7 +165,7 @@
   <action name="fileOpenAction">
    <property name="icon">
     <iconset>
-     <normaloff>image2</normaloff>image2</iconset>
+     <normaloff>fileopen.xpm</normaloff>fileopen.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;Open...</string>
@@ -186,7 +186,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image3</normaloff>image3</iconset>
+     <normaloff>filesave.xpm</normaloff>filesave.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -224,7 +224,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image4</normaloff>image4</iconset>
+     <normaloff>fileprint.xpm</normaloff>fileprint.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;Print...</string>
@@ -433,7 +433,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image11</normaloff>image11</iconset>
+     <normaloff>anim-play.xpm</normaloff>anim-play.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;Play</string>
@@ -454,7 +454,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image12</normaloff>image12</iconset>
+     <normaloff>anim-pause.xpm</normaloff>anim-pause.xpm</iconset>
    </property>
    <property name="text">
     <string>P&amp;ause</string>
@@ -475,7 +475,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image13</normaloff>image13</iconset>
+     <normaloff>anim-stop.xpm</normaloff>anim-stop.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;Stop</string>
@@ -496,7 +496,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image14</normaloff>image14</iconset>
+     <normaloff>anim-prev.xpm</normaloff>anim-prev.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;Back step</string>
@@ -517,7 +517,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image15</normaloff>image15</iconset>
+     <normaloff>anim-next.xpm</normaloff>anim-next.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;Next step</string>
@@ -538,7 +538,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image16</normaloff>image16</iconset>
+     <normaloff>zoom-in.xpm</normaloff>zoom-in.xpm</iconset>
    </property>
    <property name="text">
     <string>Zoom &amp;In</string>
@@ -559,7 +559,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image17</normaloff>image17</iconset>
+     <normaloff>zoom-out.xpm</normaloff>zoom-out.xpm</iconset>
    </property>
    <property name="text">
     <string>Zoom &amp;out</string>
@@ -580,7 +580,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>image18</normaloff>image18</iconset>
+     <normaloff>zoom-default.xpm</normaloff>zoom-default.xpm</iconset>
    </property>
    <property name="text">
     <string>&amp;Default</string>
@@ -660,7 +660,7 @@
  <connections>
   <connection>
    <sender>fileNewAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>fileNew()</slot>
    <hints>
@@ -676,7 +676,7 @@
   </connection>
   <connection>
    <sender>fileOpenAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>fileOpen()</slot>
    <hints>
@@ -692,7 +692,7 @@
   </connection>
   <connection>
    <sender>fileSaveAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>fileSave()</slot>
    <hints>
@@ -708,7 +708,7 @@
   </connection>
   <connection>
    <sender>fileSaveAsAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>fileSaveAs()</slot>
    <hints>
@@ -724,7 +724,7 @@
   </connection>
   <connection>
    <sender>filePrintAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>filePrint()</slot>
    <hints>
@@ -740,7 +740,7 @@
   </connection>
   <connection>
    <sender>fileExitAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>fileExit()</slot>
    <hints>
@@ -756,7 +756,7 @@
   </connection>
   <connection>
    <sender>editUndoAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>editUndo()</slot>
    <hints>
@@ -772,7 +772,7 @@
   </connection>
   <connection>
    <sender>editRedoAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>editRedo()</slot>
    <hints>
@@ -788,7 +788,7 @@
   </connection>
   <connection>
    <sender>editCutAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>editCut()</slot>
    <hints>
@@ -804,7 +804,7 @@
   </connection>
   <connection>
    <sender>editCopyAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>editCopy()</slot>
    <hints>
@@ -820,7 +820,7 @@
   </connection>
   <connection>
    <sender>editPasteAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>editPaste()</slot>
    <hints>
@@ -836,7 +836,7 @@
   </connection>
   <connection>
    <sender>editFindAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>editFind()</slot>
    <hints>
@@ -852,7 +852,7 @@
   </connection>
   <connection>
    <sender>helpIndexAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>helpIndex()</slot>
    <hints>
@@ -868,7 +868,7 @@
   </connection>
   <connection>
    <sender>helpContentsAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>helpContents()</slot>
    <hints>
@@ -884,7 +884,7 @@
   </connection>
   <connection>
    <sender>helpAboutAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>helpAbout()</slot>
    <hints>
@@ -900,7 +900,7 @@
   </connection>
   <connection>
    <sender>animatePlayAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>animatePlay()</slot>
    <hints>
@@ -916,7 +916,7 @@
   </connection>
   <connection>
    <sender>animatePauseAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>animatePause()</slot>
    <hints>
@@ -932,7 +932,7 @@
   </connection>
   <connection>
    <sender>animateStopAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>animateStop()</slot>
    <hints>
@@ -948,7 +948,7 @@
   </connection>
   <connection>
    <sender>animateNextAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>animateNext()</slot>
    <hints>
@@ -964,7 +964,7 @@
   </connection>
   <connection>
    <sender>animatePrevAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>animatePrev()</slot>
    <hints>
@@ -996,7 +996,7 @@
   </connection>
   <connection>
    <sender>zoomDefaultAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>zoomDefaultAction_activated()</slot>
    <hints>
@@ -1012,7 +1012,7 @@
   </connection>
   <connection>
    <sender>zoomZoom_InAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>zoomZoom_InAction_activated()</slot>
    <hints>
@@ -1028,7 +1028,7 @@
   </connection>
   <connection>
    <sender>zoomZoom_outAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>zoomZoom_outAction_activated()</slot>
    <hints>
@@ -1044,7 +1044,7 @@
   </connection>
   <connection>
    <sender>editPreferencesNumber_of_LayersAction</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>HyperArt</receiver>
    <slot>editPreferencesNumber_of_LayersAction_activated()</slot>
    <hints>

@@ -20,13 +20,14 @@
 
 #include "canvaselements.h"
 #include <QPainterPath>
+#include <QtWidgets/QGraphicsPolygonItem>
 
 #include <iostream>
 #include <cmath>
 using namespace std;
 
-CanvasPolyLine::CanvasPolyLine(QCanvas *canvas)
-    : QCanvasPolygon(canvas)
+CanvasPolyLine::CanvasPolyLine(QGraphicsScene *canvas)
+    :  QGraphicsPolygonItem()
 {
 }
 
@@ -34,12 +35,13 @@ void CanvasPolyLine::drawShape(QPainter &painter)
 {
     painter.setPen(pen());
     painter.setBrush(Qt::NoBrush);
-    painter.drawPolyline(poly);
+    painter.drawPolyline(polygon());
 }
 
 //============================================================================
-CanvasPoly::CanvasPoly(QCanvas *canvas, bool fill)
-    : QCanvasPolygon(canvas), filled_(fill)
+CanvasPoly::CanvasPoly(QGraphicsScene *canvas, bool fill)
+    : QGraphicsPolygonItem(), filled_(fill)
+    //TODO: add to Scene
 {
 }
 
@@ -48,11 +50,11 @@ void CanvasPoly::drawShape(QPainter &painter)
     painter.setPen(pen());
     painter.setBrush(brush());
     if (filled_)
-        painter.drawPolygon(poly);
+        painter.drawPolygon(polygon());
     else
     {
-        painter.drawPolyline(poly);
-        painter.drawLine(poly.point(poly.size() - 1), poly.point(0));
+        painter.drawPolyline(polygon());
+        painter.drawLine(polygon().at(polygon().size() - 1), polygon().at(0));
     }
 }
 
@@ -63,9 +65,9 @@ void CanvasEllipse::drawShape(QPainter &painter)
     painter.setPen(pen());
     painter.setBrush(brush());
     if (filled_)
-        painter.drawEllipse(x(), y(), width(), height());
+        painter.drawEllipse(x(), y(), rect().width(), rect().height());
     else
-        painter.drawArc(x(), y(), width(), height(), 0, 360 * 16);
+        painter.drawArc(x(), y(), rect().width(), rect().height(), 0, 360 * 16);
 }
 //============================================================================
 
@@ -83,13 +85,14 @@ void CanvasHyperLine::setParameters(const QPoint &topleft, const QSize &size, in
     angle2_ = alen;
     approximate_ = false;
 
+    //TODO: The parameters above are set but not used here.
     // find out the bounding rectangle using the points in the arc
-    QPolygon points;
-    points.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1_ * 16, angle2_ * 16);
-    boundingRect_ = points.boundingRect();
+    // QPolygon points;
+    // points.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1_ * 16, angle2_ * 16);
+    // boundingRect_ = points.boundingRect();
 }
 
-void CanvasHyperLine::setParamters(const QPoint &a, const QPoint &b)
+void CanvasHyperLine::setParameters(const QPoint &a, const QPoint &b)
 {
     a_ = a;
     b_ = b;
@@ -115,9 +118,10 @@ void CanvasHyperLine::drawShape(QPainter &painter)
 //============================================================================
 
 // TODO destructor??
-CanvasHyperPolyLine::CanvasHyperPolyLine(QCanvas *canvas)
-    : QCanvasPolygonalItem(canvas)
+CanvasHyperPolyLine::CanvasHyperPolyLine(QGraphicsScene *canvas)
+: QGraphicsPolygonItem()
 {
+    //TODO: I may need to set the scene here with the *canvas pointer
 }
 
 CanvasHyperPolyLine::~CanvasHyperPolyLine()
@@ -131,11 +135,11 @@ void CanvasHyperPolyLine::addLine(CanvasHyperLine *line)
     lines_.push_back(line);
     if (lines_.size() > 1)
     {
-        boundingRect_ = boundingRect_.unite(line->boundingRect());
+        boundingRect_ = boundingRect_.united(line->boundingRect().toRect());
     }
     else
     { // first time setting
-        boundingRect_ = line->boundingRect();
+        boundingRect_ = line->boundingRect().toRect();
     }
 }
 
@@ -164,27 +168,34 @@ QPolygon CanvasHyperPolyLine::areaPoints() const
 void CanvasHyperPoly::addLine(CanvasHyperLine *l)
 {
     CanvasHyperPolyLine::addLine(l);
-    // add points of arc/straight line to approximate us with a euclid polygon
+    // add points of arc/straight line to approximate us with a euclidian polygon
     if (l->isApproximated())
     {
         points_.putPoints(int(points_.count()), 2, l->a().x(), l->a().y(), l->b().x(), l->b().y());
     }
     else
     {
-        QPainterPath pNew;
+        // Convert CanvasHyperline to QPainterPath
         QPoint topleft = l->topLeft();
         QSize size = l->size();
         int angle1 = l->startAngle(), angle2 = l->lenAngle();
         QPainterPath pOrig;
-        pOrig.makeArc(topleft.x(), topleft.y(), size.width(), size.height(), angle1 * 16, angle2 * 16);
-        unsigned int pointsInSegment = pOrig.count() / 8;
-        if (pointsInSegment == 0)
-            pointsInSegment = 1;
-        for (unsigned int i = 0, j = 0; i < pOrig.count(); i += pOrig.count() / pointsInSegment, j++)
-        {
-            pNew.putPoints(j, 1, pOrig.point(i).x(), pOrig.point(i).y());
-        }
-        points_.putPoints(int(points_.count()), pNew.count(), pNew);
+        pOrig.arcTo(topleft.x(), topleft.y(), size.width(), size.height(), angle1 * 16, angle2 * 16);
+        // Convert QPainterPath to QPolygon
+        QPolygon poly = pOrig.toFillPolygon().toPolygon();
+        points_.putPoints(int(points_.count()), poly.size(), poly);
+
+        // unsigned int pointsInSegment = pOrig.elementCount() / 8;
+        // if (pointsInSegment == 0)
+        //     pointsInSegment = 1;
+        // QPainterPath pNew;
+        // //TODO: This is going to take some thought and work to get right.
+        // pNew.addPolygon(pOrig.toSubpathPolygons().at(0));
+        // for (unsigned int i = 0, j = 0; i < pOrig.elementCount(); i += pOrig.elementCount() / pointsInSegment, j++)
+        // {
+        //     pNew.putPoints(j, 1, pOrig.point(i).x(), pOrig.point(i).y());
+        // }
+        // points_.putPoints(int(points_.count()), pNew.elementCount(), pNew);
     }
 }
 

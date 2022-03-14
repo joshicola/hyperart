@@ -10,11 +10,12 @@
 //
 //
 #include "diagramview.h"
-#include "qdocviewer.h"
+// #include "qdocviewer.h"
 
 DiagramView::DiagramView()
 {
-    docViewer = new QDocViewer();
+    //TODO: This is cludgy.  We should be able to use the QDocViewer but it doesn't work.
+    docViewer = true;//new QDocViewer();
     //Derived class should connect
     //docViewer :: SIGNAL(onDocumentChange(unsigned int, unsigned long)
     //to DerivedClass :: SLOT(onDocumentChange())
@@ -27,15 +28,20 @@ DiagramView::DiagramView()
 DiagramView::~DiagramView()
 {
     if(docViewer) {
-        delete docViewer;
-        docViewer = 0;
+        //delete docViewer;
+        docViewer = false;
     }
 }
 
-void DiagramView::setDocument(QDocument* doc)
-{
+void DiagramView::setDocument(QTextDocument* doc)
+{   
+    
     if(docViewer) {
-        docViewer->setDocument(doc);
+        dgram = (Diagram*)doc;
+        //TODO: Another Cludgy hack.  We should be able to use the QDocViewer but it doesn't work.
+        emit dgram->contentsChange(0, 0, 0);
+        //docViewer->setDocument(doc);
+        docViewer = true;
     }
     else {
         qWarning("Doc viewer does not exist");

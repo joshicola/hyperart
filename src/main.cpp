@@ -24,8 +24,8 @@
 int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
-    Ui::HyperArt *mw = new Ui::HyperArt();
-    mw->setCaption("HyperArt");
+    HyperArt *mw = new HyperArt();
+    mw->setWindowTitle("HyperArt");
     mw->show();
     a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
     return a.exec();

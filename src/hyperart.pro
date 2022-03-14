@@ -1,9 +1,9 @@
 TEMPLATE	= app
 LANGUAGE	= C++
 
-CONFIG	+= debug warn_on qt thread staticlib
-
-HEADERS	+= \ # canvaselements.h \
+CONFIG	+= debug warn_on qt thread staticlib widgets
+QT += widgets xml printsupport
+HEADERS	+= canvaselements.h \
 	datareader.h \
 	defs.h \
 	diagram.h \
@@ -15,15 +15,15 @@ HEADERS	+= \ # canvaselements.h \
 	permutation.h \
 	pgonedge.h \
 	poincareview.h \
-	qdocument.h \
-	qdocviewer.h \
 	regularpgon.h \
 	transformation.h \
-	# hyperart.ui.h \
+	ui_hyperart.h \
+	hyperart.h \
 	diagramview.h \
 	irregularpgon.h
 
-SOURCES	+= \ #canvaselements.cpp \
+SOURCES	+= canvaselements.cpp \
+	hyperart.cpp \
 	datareader.cpp \
 	diagram.cpp \
 	element.cpp \
@@ -35,16 +35,13 @@ SOURCES	+= \ #canvaselements.cpp \
 	permutation.cpp \
 	pgonedge.cpp \
 	poincareview.cpp \
-	qdocument.cpp \
-	qdocviewer.cpp \
 	regularpgon.cpp \
 	transformation.cpp \
 	defs.cpp \
 	diagramview.cpp \
 	irregularpgon.cpp
 
-#The following line was changed from FORMS to FORMS3 by qt3to4
-FORMS3	= hyperart.ui
+FORMS	= hyperart.ui
 
 IMAGES	= butter.xpm \
 	fileopen.xpm \

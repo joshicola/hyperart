@@ -1,0 +1,94 @@
+x86_64-linux-gnu-g++ -c -pipe -g -fPIC -D_REENTRANT -Wall -W -fPIC -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtXml -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -o poincareview.o poincareview.cpp
+In file included from poincareview.h:26,
+                 from poincareview.cpp:20:
+canvaselements.h: In constructor ‘CanvasEllipse::CanvasEllipse(QGraphicsScene*, bool)’:
+canvaselements.h:76:35: warning: unused parameter ‘canvas’ [-Wunused-parameter]
+   76 |     CanvasEllipse(QGraphicsScene *canvas, bool fill = true) : QGraphicsEllipseItem(), filled_(fill) {}
+      |                   ~~~~~~~~~~~~~~~~^~~~~~
+canvaselements.h: In constructor ‘CanvasEllipse::CanvasEllipse(int, int, int, int, QGraphicsScene*)’:
+canvaselements.h:77:37: warning: unused parameter ‘width’ [-Wunused-parameter]
+   77 |     CanvasEllipse(int x, int y, int width, int height, QGraphicsScene *canvas) : QGraphicsEllipseItem(x,y, rect().width(), rect().height()), filled_(true) {}
+      |                                 ~~~~^~~~~
+canvaselements.h:77:48: warning: unused parameter ‘height’ [-Wunused-parameter]
+   77 |     CanvasEllipse(int x, int y, int width, int height, QGraphicsScene *canvas) : QGraphicsEllipseItem(x,y, rect().width(), rect().height()), filled_(true) {}
+      |                                            ~~~~^~~~~~
+canvaselements.h:77:72: warning: unused parameter ‘canvas’ [-Wunused-parameter]
+   77 |     CanvasEllipse(int x, int y, int width, int height, QGraphicsScene *canvas) : QGraphicsEllipseItem(x,y, rect().width(), rect().height()), filled_(true) {}
+      |                                                        ~~~~~~~~~~~~~~~~^~~~~~
+In file included from poincareview.h:29,
+                 from poincareview.cpp:20:
+element.h: At global scope:
+element.h:34:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+   34 |     const double x() const { return x_; }
+      |     ^~~~~
+element.h:35:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+   35 |     const double y() const { return y_; }
+      |     ^~~~~
+element.h:36:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+   36 |     const double w() const { return w_; }
+      |     ^~~~~
+In file included from poincareview.h:29,
+                 from poincareview.cpp:20:
+element.h:188:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  188 |     const double width() const { return width_; }
+      |     ^~~~~
+element.h:189:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  189 |     const double height() const { return height_; }
+      |     ^~~~~
+element.h:190:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  190 |     const double startAngle() const { return startAngle_; }
+      |     ^~~~~
+element.h:191:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  191 |     const double endAngle() const { return endAngle_; }
+      |     ^~~~~
+element.h:199:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  199 |     const bool shouldDrawArc() const { return shouldDrawArc_; }
+      |     ^~~~~
+In file included from diagram.h:27,
+                 from poincareview.h:30,
+                 from poincareview.cpp:20:
+pattern.h:72:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+   72 |     const ElementPtr element(UId elemId) const;
+      |     ^~~~~
+pattern.h:74:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+   74 |     const ElementPtr frameElement(UId elemId) const { return frame_[elemId]; }
+      |     ^~~~~
+In file included from diagram.h:28,
+                 from poincareview.h:30,
+                 from poincareview.cpp:20:
+layer.h:48:5: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+   48 |     const PatternPtr pattern(const UId patId) const { return patterns_[patId]; }
+      |     ^~~~~
+poincareview.cpp: In constructor ‘PoincareView::PoincareView(QWidget*, const char*, Qt::WindowFlags)’:
+poincareview.cpp:34:57: warning: unused parameter ‘name’ [-Wunused-parameter]
+   34 | PoincareView::PoincareView(QWidget *parent, const char *name, Qt::WindowFlags f)
+      |                                             ~~~~~~~~~~~~^~~~
+poincareview.cpp:34:79: warning: unused parameter ‘f’ [-Wunused-parameter]
+   34 | PoincareView::PoincareView(QWidget *parent, const char *name, Qt::WindowFlags f)
+      |                                                               ~~~~~~~~~~~~~~~~^
+poincareview.cpp: In member function ‘virtual void PoincareView::print(QPainter&)’:
+poincareview.cpp:78:36: warning: unused parameter ‘p’ [-Wunused-parameter]
+   78 | void PoincareView::print(QPainter &p)
+      |                          ~~~~~~~~~~^
+poincareview.cpp: In member function ‘void PoincareView::animNext()’:
+poincareview.cpp:229:33: warning: comparison of integer expressions of different signedness: ‘std::vector<std::pair<int, unsigned int> >::size_type’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+  229 |         if (dgram->animq.size() == animateNext_)
+      |             ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+poincareview.cpp: In member function ‘void PoincareView::animateTimerDone()’:
+poincareview.cpp:263:29: warning: comparison of integer expressions of different signedness: ‘std::vector<std::pair<int, unsigned int> >::size_type’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+  263 |     if (dgram->animq.size() == animateNext_)
+      |         ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+poincareview.cpp: In member function ‘void PoincareView::drawElement(ElementPtr, bool, bool)’:
+poincareview.cpp:427:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  427 |         for (i = 0; i < e->numPoints(); ++i)
+      |                     ~~^~~~~~~~~~~~~~~~
+poincareview.cpp:433:16: warning: variable ‘center’ set but not used [-Wunused-but-set-variable]
+  433 |         QPoint center = boundingRect.center();
+      |                ^~~~~~
+poincareview.cpp:453:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  453 |         for (i = 0; i < e->numPoints(); ++i)
+      |                     ~~^~~~~~~~~~~~~~~~
+poincareview.cpp:459:16: warning: variable ‘center’ set but not used [-Wunused-but-set-variable]
+  459 |         QPoint center = boundingRect.center();
+      |                ^~~~~~
+x86_64-linux-gnu-g++  -o hyperart canvaselements.o hyperart.o datareader.o diagram.o element.o layer.o main.o matrix.o parameters.o pattern.o permutation.o pgonedge.o poincareview.o regularpgon.o transformation.o defs.o diagramview.o irregularpgon.o moc_poincareview.o moc_hyperart.o   -lpthread /usr/lib/x86_64-linux-gnu/libQt5PrintSupport.so /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Xml.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so   

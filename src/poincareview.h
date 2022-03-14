@@ -20,7 +20,8 @@
 #ifndef POINCAREVIEW_H
 #define POINCAREVIEW_H
 
-#include <qcanvas.h>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsView>
 #include <qtimer.h>
 #include "canvaselements.h"
 #include "qdocviewer.h"
@@ -32,10 +33,10 @@ class Pattern;
 
 /**
 Poincare disk view of the diagram.
-All the drawing is done using a QCanvas.
+All the drawing is done using a QGraphicsScene.
 @author Ajit Datar
 */
-class PoincareView : public QCanvasView, public DiagramView
+class PoincareView : public QGraphicsView, public DiagramView
 {
     Q_OBJECT
 public: // static methods
@@ -59,7 +60,7 @@ private: // static data
     static QPoint origin_;
 
 public:
-    PoincareView(QWidget *parent = 0, const char *name = 0, Qt::WFlags f = 0);
+    PoincareView(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags f = 0);
 
     ~PoincareView();
     void print(QPainter &p);
@@ -113,22 +114,22 @@ private slots:
 private: // utility functions not part of the general view interface
     /**
     Make a QPoint (screen point) from a Point
-    Utility function. Used as a point on the QCanvas.
+    Utility function. Used as a point on the QGraphicsScene.
     */
     QPoint makeQPoint(const Point &mp);
     CanvasHyperLine *makeCanvasHyperLine(const HyperLine &mhl);
 
 private: // data
-    QCanvas *canvas_;
-    QCanvasEllipse *disk; // the poincare disk
+    QGraphicsScene *canvas_;
+    QGraphicsEllipseItem *disk; // the poincare disk
     ViewMode viewMode_;
     QMatrix defaultView;
     bool showFrame_;
 
     QMap<int, bool> isLayerVisible;
 
-    typedef QMap<UId, QCanvasItem *> ItemStore;
-    typedef QMap<UId, QCanvasItem *>::Iterator ItemStoreIter;
+    typedef QMap<UId, QGraphicsItem *> ItemStore;
+    typedef QMap<UId, QGraphicsItem *>::Iterator ItemStoreIter;
     ItemStore items_;
 
     QTimer *animateTimer;

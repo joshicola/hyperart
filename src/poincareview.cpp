@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "poincareview.h"
 #include <qfileinfo.h>
-#include <qpaintdevicemetrics.h>
+//#include <qpaintdevicemetrics.h>
 // Added by qt3to4:
 #include <QPolygon>
 #include <QPixmap>
@@ -31,20 +31,22 @@ int PoincareView::canvasWidth_(800);
 int PoincareView::diameter_(PoincareView::canvasHeight() < PoincareView::canvasWidth() ? PoincareView::canvasHeight() : PoincareView::canvasWidth());
 QPoint PoincareView::origin_(PoincareView::canvasWidth() / 2, PoincareView::canvasHeight() / 2);
 //============================================================================
-PoincareView::PoincareView(QWidget *parent, const char *name, Qt::WFlags f)
-    : QCanvasView(parent, name, f), DiagramView(), viewMode_(NORMAL), showFrame_(false)
+PoincareView::PoincareView(QWidget *parent, const char *name, Qt::WindowFlags f)
+    : QGraphicsView(parent), DiagramView(), viewMode_(NORMAL), showFrame_(false)
 {
-    QObject::connect(docViewer, SIGNAL(onDocumentChange(unsigned int, unsigned long)),
-                     this, SLOT(onDocumentChange()));
-    QObject::connect(docViewer, SIGNAL(onDocumentFirstChange(unsigned int, unsigned long)),
-                     this, SLOT(onDocumentChange()));
+    QTextDocument *dgram = new QTextDocument();
+    QObject::connect(dgram, SIGNAL(contentsChanged()),
+                      this, SLOT(onDocumentChange()));
+    // QObject::connect(docViewer, SIGNAL(onDocumentFirstChange(unsigned int, unsigned long)),
+    //                  this, SLOT(onDocumentChange()));
 
-    canvas_ = new QCanvas(PoincareView::canvasWidth_, PoincareView::canvasHeight_);
-    this->setCanvas(canvas_);
+    //TODO: Find the origin for the Poincare disk
+    canvas_ = new QGraphicsScene(0,0,PoincareView::canvasWidth_, PoincareView::canvasHeight_);
+    this->setScene(canvas_);
 
     defaultView.scale(0.87, 0.87); // zoom out slightly to see the diagram properly
     // TODO translate so that canvas is always at the center of the window
-    setWorldMatrix(defaultView);
+    setMatrix(defaultView);
 
     // connect signals from the MainWindow to our slots
     QObject::connect(parent, SIGNAL(doZoom(ZoomType)), this, SLOT(zoom(ZoomType)));
@@ -75,41 +77,42 @@ PoincareView::~PoincareView()
 
 void PoincareView::print(QPainter &p)
 {
-    // fit to page printing -- ref: http://lists.trolltech.com/qt-interest/2004-12/thread00656-0.html
-    QPaintDeviceMetrics pmetrics(p.device());
-    int pageWidth = pmetrics.width();
-    int pageHeight = pmetrics.height();
+    // // fit to page printing -- ref: http://lists.trolltech.com/qt-interest/2004-12/thread00656-0.html
+    // QPaintDeviceMetrics pmetrics(p.device());
+    // int pageWidth = pmetrics.width();
+    // int pageHeight = pmetrics.height();
 
-    // find out the bounding rectangle of all the canvas items
-    // so that we can scale the design to fit the page
-    QRect bounding;
-    QCanvasItemList items = canvas()->allItems();
-    QCanvasItemList::iterator it;
-    for (it = items.begin(); it != items.end(); ++it)
-    {
-        bounding = bounding.unite((*it)->boundingRect());
-    }
-    double scaleX = (double)pageWidth / (double)bounding.width();
-    double scaleY = (double)pageHeight / (double)bounding.height();
-    double scale;
-    scale = scaleX > scaleY ? scaleY : scaleX; // select smaller
-    p.scale(scale, scale);
-    p.translate(-bounding.left(), -bounding.top());
-    canvas()->drawArea(bounding, &p, false);
+    // // find out the bounding rectangle of all the canvas items
+    // // so that we can scale the design to fit the page
+    // QRect bounding;
+    // QList items = canvas_->allItems();
+    // QList::iterator it;
+    // for (it = items.begin(); it != items.end(); ++it)
+    // {
+    //     bounding = bounding.unite((*it)->boundingRect());
+    // }
+    // double scaleX = (double)pageWidth / (double)bounding.width();
+    // double scaleY = (double)pageHeight / (double)bounding.height();
+    // double scale;
+    // scale = scaleX > scaleY ? scaleY : scaleX; // select smaller
+    // p.scale(scale, scale);
+    // p.translate(-bounding.left(), -bounding.top());
+    // canvas_->drawArea(bounding, &p, false);
 }
 
 void PoincareView::saveAs(QString fileName)
 {
     QPainter painter;
     QPixmap pix;
-    QCanvas *c = canvas();
-    pix.resize(c->width(), c->height());
+    QGraphicsScene *c = canvas_;
+    pix = pix.scaled(c->width(), c->height());
     painter.begin(&pix);
-    c->drawArea(QRect(0, 0, c->width(), c->height()), &painter);
+    // How to use the painter???
+    c->addRect(qreal(0.0), qreal(0.0), c->width(), c->height());//, &painter);
     painter.end();
 
     QFileInfo fi(fileName);
-    QString ext = fi.extension(false); // get only the last extension
+    QString ext = fi.suffix(); // get only the last extension
     if (ext == "jpg")
     {
         pix.save(fileName, "JPEG");
@@ -135,30 +138,30 @@ void PoincareView::pan(PanType ptype)
         vScroll = -canvasHeight() / stepSize;
     if (hScroll || vScroll)
     {
-        QMatrix wm = worldMatrix();
+        QMatrix wm = matrix();
         wm.translate(hScroll, vScroll);
-        setWorldMatrix(wm);
-        updateContents();
-        // canvas()->update();
+        setMatrix(wm);
+        update();
+        // canvas_->update();
     }
 }
 
 void PoincareView::zoom(ZoomType type)
 {
-    QMatrix m = worldMatrix();
+    QMatrix m = matrix();
     if (IN == type)
     {
         m.scale(1.1, 1.1);
-        setWorldMatrix(m);
+        setMatrix(m);
     }
     else if (OUT == type)
     {
         m.scale(0.9, 0.9);
-        setWorldMatrix(m);
+        setMatrix(m);
     }
     else if (DEFAULT == type)
     {
-        setWorldMatrix(defaultView);
+        setMatrix(defaultView);
     }
 }
 
@@ -171,7 +174,7 @@ void PoincareView::toggleLayer(int layerId, bool state)
     {
         isLayerVisible[layerId] = state;
         drawLayer(layerId, isLayerVisible[layerId]);
-        canvas()->update();
+        canvas_->update();
     }
 }
 
@@ -179,7 +182,7 @@ void PoincareView::toggleFrame(bool state)
 {
     showFrame_ = state;
     drawFrame(showFrame_);
-    canvas()->update();
+    canvas_->update();
 }
 
 void PoincareView::animPlay()
@@ -195,7 +198,7 @@ void PoincareView::animPlay()
         drawDiagram(false); // hide the whole diagram
         animateNext_ = 0;
         animateTimer->start(animDelay_);
-        canvas()->update();
+        canvas_->update();
     }
     paused_ = false;
 }
@@ -214,7 +217,7 @@ void PoincareView::animStop()
     drawBoundingCircle();
     restoreDiagramState(); // return to view state before animation started
     drawDiagram(true);     // show the whole diagram
-    canvas()->update();
+    canvas_->update();
 
     // TODO eg only one layer might be visible before animation started
 }
@@ -228,12 +231,12 @@ void PoincareView::animNext()
             drawBoundingCircle();
             drawDiagram(false); // hide the whole diagram
             animateNext_ = 0;
-            canvas()->update();
+            canvas_->update();
         }
         PatternPtr p = dgram->pattern(dgram->animq.at(animateNext_));
         drawPattern(*p); // NOTE is ++ atomic?
         ++animateNext_;
-        canvas()->update();
+        canvas_->update();
     }
 }
 
@@ -246,12 +249,12 @@ void PoincareView::animPrev()
             drawBoundingCircle();
             drawDiagram(true); // show the whole diagram
             animateNext_ = dgram->animq.size() - 1;
-            canvas()->update();
+            canvas_->update();
         }
         PatternPtr p = dgram->pattern(dgram->animq.at(animateNext_));
         drawPattern(*p, false); // NOTE is -- atomic?
         --animateNext_;
-        canvas()->update();
+        canvas_->update();
     }
 }
 
@@ -268,7 +271,7 @@ void PoincareView::animateTimerDone()
     {
         PatternPtr p = dgram->pattern(dgram->animq.at(animateNext_++));
         drawPattern(*p); // NOTE is ++ atomic?
-        canvas()->update();
+        canvas_->update();
     }
 }
 
@@ -287,8 +290,8 @@ void PoincareView::init()
     // then delete all actual items on the underlaying canvas
     // this will also delete the boundingCircle
     // but onNewDocument will recreate it
-    QCanvasItemList::iterator it;
-    QCanvasItemList itemList = canvas()->allItems();
+    QList<QGraphicsItem*>::iterator  it;
+    QList<QGraphicsItem*> itemList = canvas_->items();
     for (it = itemList.begin(); it != itemList.end(); ++it)
     {
         (*it)->hide(); // this is needed
@@ -300,12 +303,14 @@ void PoincareView::init()
 void PoincareView::drawBoundingCircle(bool visible, bool init)
 {
     if (init)
-    {
-        disk = new QCanvasEllipse(diameter(), diameter(), canvas());
+    {   // How do we associate this with the canvas/scene?
+    //disk = new QGraphicsEllipseItem(diameter(), diameter(), canvas_);
+        disk = new QGraphicsEllipseItem(0,0,diameter(), diameter());
         disk->setBrush(QColor(0xf6, 0xeb, 0x70));
         disk->setX(origin().x());
         disk->setY(origin().y());
-        disk->setZ(-100);
+        //TODO: Find out why this is needed
+        //disk->setZ(-100);
     }
     disk->setVisible(visible);
 }
@@ -398,10 +403,12 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         QPoint p1 = makeQPoint(center);
         QPoint p2 = makeQPoint(circum);
         double radius = sqrt(pow(double(p1.x() - p2.x()), 2) + pow(double(p1.y() - p2.y()), 2));
-        CanvasEllipse *circle = new CanvasEllipse(2 * radius, 2 * radius, canvas());
+        // CanvasEllipse *circle = new CanvasEllipse(2 * radius, 2 * radius, canvas_);
+        CanvasEllipse *circle = new CanvasEllipse(0,0,int(2 * radius), int(2 * radius), canvas_);
         circle->setX(p1.x());
         circle->setY(p2.y());
-        circle->setZ(e->zorder());
+        // TODO: Find out why this is needed... I think it is about setting draw order.
+        // circle->setZ(e->zorder());
         circle->setPen(pen);
         circle->setBrush(dgram->colorMapVal(e->cid()));
         circle->setFilled(e->filled());
@@ -413,7 +420,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     else if (EUCLID_POLY == e->type())
     {
         // There are n points, last point should be joined to first
-        CanvasPoly *poly = new CanvasPoly(canvas());
+        CanvasPoly *poly = new CanvasPoly(canvas_);
         QPolygon pa(e->numPoints());
         QPoint pt;
         int i = 0;
@@ -424,10 +431,11 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         }
         QRect boundingRect = pa.boundingRect();
         QPoint center = boundingRect.center();
-        poly->setPoints(pa);
+        poly->setPolygon(pa);
         poly->setX(0); // TODO set x,y to sane values other than 0
         poly->setY(0);
-        poly->setZ(e->zorder());
+        // TODO: Find out how to set Z order
+        // poly->setZ(e->zorder());
         poly->setPen(pen);
         poly->setBrush(dgram->colorMapVal(e->cid()));
         poly->setFilled(e->filled());
@@ -438,7 +446,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     }
     else if (EUCLID_POLYLINE == e->type())
     {
-        CanvasPolyLine *polyline = new CanvasPolyLine(canvas());
+        CanvasPolyLine *polyline = new CanvasPolyLine(canvas_);
         QPolygon pa(e->numPoints());
         QPoint pt;
         int i = 0;
@@ -449,10 +457,11 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         }
         QRect boundingRect = pa.boundingRect();
         QPoint center = boundingRect.center();
-        polyline->setPoints(pa);
+        polyline->setPolygon(pa);
         polyline->setX(0); // TODO set x,y to sane values other than 0
         polyline->setY(0);
-        polyline->setZ(e->zorder());
+        //TODO: Set the Z order
+        // polyline->setZ(e->zorder());
         polyline->setPen(pen);
         polyline->setVisible(visible);
         items_.insert(e->id(), polyline);
@@ -463,7 +472,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     {
         HyperPolyLine *hpl = (HyperPolyLine *)e;
         vector<HyperLine> &mhlines = hpl->hyperLines();
-        CanvasHyperPolyLine *hpolyline = new CanvasHyperPolyLine(canvas());
+        CanvasHyperPolyLine *hpolyline = new CanvasHyperPolyLine(canvas_);
 
         vector<HyperLine>::iterator it;
         for (it = mhlines.begin(); it != mhlines.end(); ++it)
@@ -474,7 +483,8 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         hpolyline->setPen(pen);
         hpolyline->setX(0); // TODO set x,y to sane values other than 0
         hpolyline->setY(0);
-        hpolyline->setZ(e->zorder());
+        // Set the Z order
+        // hpolyline->setZ(e->zorder());
         hpolyline->setVisible(visible);
         items_.insert(e->id(), hpolyline);
     }
@@ -482,7 +492,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     {
         HyperPoly *hp = (HyperPoly *)e;
         vector<HyperLine> &mhlines = hp->hyperLines();
-        CanvasHyperPoly *hpoly = new CanvasHyperPoly(canvas());
+        CanvasHyperPoly *hpoly = new CanvasHyperPoly(canvas_);
 
         vector<HyperLine>::iterator it;
         for (it = mhlines.begin(); it != mhlines.end(); ++it)
@@ -494,7 +504,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         hpoly->setBrush(dgram->colorMapVal(e->cid()));
         hpoly->setX(0); // TODO set x,y to sane values other than 0
         hpoly->setY(0);
-        hpoly->setZ(e->zorder());
+        // hpoly->setZ(e->zorder());
         hpoly->setVisible(visible);
         hpoly->setFilled(hp->filled());
         items_.insert(e->id(), hpoly);
@@ -507,8 +517,9 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
 }
 
 void PoincareView::onDocumentChange()
-{
-    dgram = (Diagram *)docViewer->getDocument();
+{   
+    //TODO: This is a hack to get the canvas to redraw.
+    //dgram = (Diagram *)docViewer->getDocument();
 
     dgram->make();
     init();
@@ -516,7 +527,7 @@ void PoincareView::onDocumentChange()
     drawDiagram(true, true);        // initialize
     drawFrame(showFrame_, true);    // initialize
 
-    canvas()->update();
+    canvas_->update();
 }
 
 QPoint PoincareView::makeQPoint(const Point &mp)
@@ -545,7 +556,7 @@ CanvasHyperLine *PoincareView::makeCanvasHyperLine(const HyperLine &mhl)
     }
     else
     {
-        chl->setParamters(makeQPoint(mhl.startPoint()), makeQPoint(mhl.endPoint()));
+        chl->setParameters(makeQPoint(mhl.startPoint()), makeQPoint(mhl.endPoint()));
     }
     return chl;
 }
