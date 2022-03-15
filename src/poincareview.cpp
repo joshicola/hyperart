@@ -34,11 +34,10 @@ QPoint PoincareView::origin_(PoincareView::canvasWidth() / 2, PoincareView::canv
 PoincareView::PoincareView(QWidget *parent, const char *name, Qt::WindowFlags f)
     : QGraphicsView(parent), DiagramView(), viewMode_(NORMAL), showFrame_(false)
 {
-    QTextDocument *dgram = new QTextDocument();
-    QObject::connect(dgram, SIGNAL(contentsChanged()),
-                      this, SLOT(onDocumentChange()));
-    // QObject::connect(docViewer, SIGNAL(onDocumentFirstChange(unsigned int, unsigned long)),
-    //                  this, SLOT(onDocumentChange()));
+    QObject::connect(docViewer, SIGNAL(onDocumentChange(unsigned int, unsigned long)),
+                    this, SLOT(onDocumentChange()));
+    QObject::connect(docViewer, SIGNAL(onDocumentFirstChange(unsigned int, unsigned long)),
+                    this, SLOT(onDocumentChange()));
 
     //TODO: Find the origin for the Poincare disk
     canvas_ = new QGraphicsScene(0,0,PoincareView::canvasWidth_, PoincareView::canvasHeight_);
@@ -307,12 +306,13 @@ void PoincareView::drawBoundingCircle(bool visible, bool init)
     //disk = new QGraphicsEllipseItem(diameter(), diameter(), canvas_);
         disk = new QGraphicsEllipseItem(0,0,diameter(), diameter());
         disk->setBrush(QColor(0xf6, 0xeb, 0x70));
-        disk->setX(origin().x());
-        disk->setY(origin().y());
+        // disk->setX(origin().x());
+        // disk->setY(origin().y());
         //TODO: Find out why this is needed
         //disk->setZ(-100);
     }
     disk->setVisible(visible);
+    canvas_->addItem(disk);
 }
 
 void PoincareView::drawFrame(bool visible, bool init)
@@ -518,8 +518,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
 
 void PoincareView::onDocumentChange()
 {   
-    //TODO: This is a hack to get the canvas to redraw.
-    //dgram = (Diagram *)docViewer->getDocument();
+    dgram = (Diagram *)docViewer->getDocument();
 
     dgram->make();
     init();

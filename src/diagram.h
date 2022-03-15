@@ -22,7 +22,7 @@
 
 #include <qcolor.h>
 
-#include <QtGui/QTextDocument>
+#include "qdocument.h"
 #include "defs.h"
 #include "pattern.h"
 #include "layer.h"
@@ -36,7 +36,7 @@ It provides a common interface for different types of diagrams
 
 @author Ajit Datar
 */
-class Diagram : public QTextDocument
+class Diagram : public QDocument
 {
 public:
     Diagram();
@@ -90,8 +90,6 @@ public:
     virtual void setNumColors(int v);
     virtual void setColorMapVal(size_type cid, QColor color);
     virtual void setNumLayers(int la) { numLayers_ = la; }
-    //TODO: Make this actually do something.
-    virtual bool updateAllViews() { return true; }
 
 protected: // methods
     /**

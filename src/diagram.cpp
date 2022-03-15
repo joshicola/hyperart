@@ -20,7 +20,7 @@
 #include "diagram.h"
 
 Diagram::Diagram()
-    : QTextDocument()
+    : QDocument()
 {
 }
 

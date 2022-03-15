@@ -20,7 +20,9 @@ HEADERS	+= canvaselements.h \
 	ui_hyperart.h \
 	hyperart.h \
 	diagramview.h \
-	irregularpgon.h
+	irregularpgon.h \
+	qdocument.h \
+	qdocviewer.h
 
 SOURCES	+= canvaselements.cpp \
 	hyperart.cpp \
@@ -39,7 +41,9 @@ SOURCES	+= canvaselements.cpp \
 	transformation.cpp \
 	defs.cpp \
 	diagramview.cpp \
-	irregularpgon.cpp
+	irregularpgon.cpp \
+	qdocument.cpp \
+	qdocviewer.cpp
 
 FORMS	= hyperart.ui
 

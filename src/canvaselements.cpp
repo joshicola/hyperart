@@ -29,6 +29,7 @@ using namespace std;
 CanvasPolyLine::CanvasPolyLine(QGraphicsScene *canvas)
     :  QGraphicsPolygonItem()
 {
+    canvas->addItem(this);
 }
 
 void CanvasPolyLine::drawShape(QPainter &painter)
@@ -43,6 +44,7 @@ CanvasPoly::CanvasPoly(QGraphicsScene *canvas, bool fill)
     : QGraphicsPolygonItem(), filled_(fill)
     //TODO: add to Scene
 {
+    canvas->addItem(this);
 }
 
 void CanvasPoly::drawShape(QPainter &painter)
@@ -122,6 +124,7 @@ CanvasHyperPolyLine::CanvasHyperPolyLine(QGraphicsScene *canvas)
 : QGraphicsPolygonItem()
 {
     //TODO: I may need to set the scene here with the *canvas pointer
+    canvas->addItem(this);
 }
 
 CanvasHyperPolyLine::~CanvasHyperPolyLine()

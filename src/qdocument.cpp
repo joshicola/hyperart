@@ -21,11 +21,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "qdocument.h"
 #include "qdocviewer.h"
 // Added by qt3to4:
-#include <QPtrList>
+#include <QList>
 
 QDocument::QDocument()
 {
-    m_rgViews = new QPtrList<QObject *>;
+    m_rgViews = new QList<QObject*>;
     modifiedFlag = false;
     firstUpdate = true;
 } // !QDocument()
@@ -41,28 +41,28 @@ QDocument::~QDocument()
 
 bool QDocument::addView(QObject *newView)
 {
-    QObject **previousCurrent = NULL;
+    QObject *previousCurrent = NULL;
 
     /* Fehler checken */
     if (!m_rgViews)
     {
         qWarning("QDocument::addView: view structure invalid");
-        m_rgViews = new QPtrList<QObject *>;
+        m_rgViews = new QList<QObject*>;
     }
 
     if (!newView)
     {
         qDebug("QDocument::addView: new view invalid");
-        return FALSE;
+        return false;
     }
 
     /* add the new view item to the list and jump back to the old position
        in the view list (-> maintain a save iteration state) */
-    previousCurrent = m_rgViews->current();
-    m_rgViews->append(&newView);
-    m_rgViews->find(previousCurrent);
+    //previousCurrent = m_rgViews->last();
+    m_rgViews->append(newView);
+    //m_rgViews->find(previousCurrent);
 
-    return TRUE;
+    return true;
 } // !addView()
 
 bool QDocument::removeView(QObject *oldView)
@@ -70,16 +70,16 @@ bool QDocument::removeView(QObject *oldView)
     if (!m_rgViews)
     {
         qWarning("QDocument::removeView: view structure invalid");
-        m_rgViews = new QPtrList<QObject *>;
+        m_rgViews = new QList<QObject*>;
     }
 
     if (!oldView)
     {
         qDebug("QDocument::removeView: view invalid");
-        return FALSE;
+        return false;
     }
 
-    return m_rgViews->remove(&oldView);
+    return m_rgViews->removeAll(oldView);
 } // !removeView()
 
 QObject *QDocument::getFirstView()
@@ -90,7 +90,7 @@ QObject *QDocument::getFirstView()
         return 0;
     }
 
-    return *(m_rgViews->first());
+    return (m_rgViews->first());
 } // !getFirstView()
 
 QObject *QDocument::getNextView()
@@ -100,7 +100,7 @@ QObject *QDocument::getNextView()
         qWarning("QDocument: view structure invalid");
     }
 
-    return *(m_rgViews->next());
+    return (m_rgViews->last());
 } // !getNextView()
 
 bool QDocument::updateAllViews(unsigned int wParam, unsigned long lParam)

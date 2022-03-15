@@ -11,7 +11,7 @@
 //
 #ifndef DIAGRAMVIEW_H
 #define DIAGRAMVIEW_H
-#include <QtGui/QTextDocument>
+#include "qdocument.h"
 #include "qdocviewer.h"
 #include "diagram.h"
 class QPainter;
@@ -27,13 +27,12 @@ public:
     DiagramView();
 
     virtual ~DiagramView();
-    virtual void setDocument(QTextDocument *doc);
+    virtual void setDocument(QDocument *doc);
     virtual void print(QPainter &p) = 0;
     virtual void saveAs(QString fileName) = 0;
 
 protected:
-    // QDocViewer *docViewer;
-    bool docViewer = true;
+    QDocViewer *docViewer;
     Diagram *dgram; // current diagram pointer
 };
 

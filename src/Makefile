@@ -69,8 +69,12 @@ SOURCES       = canvaselements.cpp \
 		transformation.cpp \
 		defs.cpp \
 		diagramview.cpp \
-		irregularpgon.cpp moc_poincareview.cpp \
-		moc_hyperart.cpp
+		irregularpgon.cpp \
+		qdocument.cpp \
+		qdocviewer.cpp moc_poincareview.cpp \
+		moc_hyperart.cpp \
+		moc_qdocument.cpp \
+		moc_qdocviewer.cpp
 OBJECTS       = canvaselements.o \
 		hyperart.o \
 		datareader.o \
@@ -89,8 +93,12 @@ OBJECTS       = canvaselements.o \
 		defs.o \
 		diagramview.o \
 		irregularpgon.o \
+		qdocument.o \
+		qdocviewer.o \
 		moc_poincareview.o \
-		moc_hyperart.o
+		moc_hyperart.o \
+		moc_qdocument.o \
+		moc_qdocviewer.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -199,7 +207,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		ui_hyperart.h \
 		hyperart.h \
 		diagramview.h \
-		irregularpgon.h canvaselements.cpp \
+		irregularpgon.h \
+		qdocument.h \
+		qdocviewer.h canvaselements.cpp \
 		hyperart.cpp \
 		datareader.cpp \
 		diagram.cpp \
@@ -216,7 +226,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		transformation.cpp \
 		defs.cpp \
 		diagramview.cpp \
-		irregularpgon.cpp
+		irregularpgon.cpp \
+		qdocument.cpp \
+		qdocviewer.cpp
 QMAKE_TARGET  = hyperart
 DESTDIR       = 
 TARGET        = hyperart
@@ -428,8 +440,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents canvaselements.h datareader.h defs.h diagram.h element.h layer.h matrix.h parameters.h pattern.h permutation.h pgonedge.h poincareview.h regularpgon.h transformation.h ui_hyperart.h hyperart.h diagramview.h irregularpgon.h $(DISTDIR)/
-	$(COPY_FILE) --parents canvaselements.cpp hyperart.cpp datareader.cpp diagram.cpp element.cpp layer.cpp main.cpp matrix.cpp parameters.cpp pattern.cpp permutation.cpp pgonedge.cpp poincareview.cpp regularpgon.cpp transformation.cpp defs.cpp diagramview.cpp irregularpgon.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents canvaselements.h datareader.h defs.h diagram.h element.h layer.h matrix.h parameters.h pattern.h permutation.h pgonedge.h poincareview.h regularpgon.h transformation.h ui_hyperart.h hyperart.h diagramview.h irregularpgon.h qdocument.h qdocviewer.h $(DISTDIR)/
+	$(COPY_FILE) --parents canvaselements.cpp hyperart.cpp datareader.cpp diagram.cpp element.cpp layer.cpp main.cpp matrix.cpp parameters.cpp pattern.cpp permutation.cpp pgonedge.cpp poincareview.cpp regularpgon.cpp transformation.cpp defs.cpp diagramview.cpp irregularpgon.cpp qdocument.cpp qdocviewer.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents hyperart.ui $(DISTDIR)/
 
 
@@ -462,9 +474,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	x86_64-linux-gnu-g++ -pipe -g -fPIC -D_REENTRANT -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_poincareview.cpp moc_hyperart.cpp
+compiler_moc_header_make_all: moc_poincareview.cpp moc_hyperart.cpp moc_qdocument.cpp moc_qdocviewer.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_poincareview.cpp moc_hyperart.cpp
+	-$(DEL_FILE) moc_poincareview.cpp moc_hyperart.cpp moc_qdocument.cpp moc_qdocviewer.cpp
 moc_poincareview.cpp: poincareview.h \
 		canvaselements.h \
 		defs.h \
@@ -500,13 +512,24 @@ moc_hyperart.cpp: hyperart.h \
 		regularpgon.h \
 		irregularpgon.h \
 		diagramview.h \
-		qdocviewer.h \
 		qdocument.h \
+		qdocviewer.h \
 		poincareview.h \
 		canvaselements.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/josher/HeavyStorage/Projects/2021.12.16.HyperArt/Code/hyperart/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/josher/HeavyStorage/Projects/2021.12.16.HyperArt/Code/hyperart/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include hyperart.h -o moc_hyperart.cpp
+
+moc_qdocument.cpp: qdocument.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/josher/HeavyStorage/Projects/2021.12.16.HyperArt/Code/hyperart/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/josher/HeavyStorage/Projects/2021.12.16.HyperArt/Code/hyperart/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include qdocument.h -o moc_qdocument.cpp
+
+moc_qdocviewer.cpp: qdocviewer.h \
+		qdocument.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/josher/HeavyStorage/Projects/2021.12.16.HyperArt/Code/hyperart/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/josher/HeavyStorage/Projects/2021.12.16.HyperArt/Code/hyperart/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtXml -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include qdocviewer.h -o moc_qdocviewer.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -545,8 +568,8 @@ ui_hyperart.h: hyperart.ui \
 		layer.h \
 		pgonedge.h \
 		parameters.h \
-		qdocviewer.h \
 		qdocument.h \
+		qdocviewer.h \
 		diagram.h \
 		defs.h \
 		pattern.h \
@@ -615,8 +638,8 @@ hyperart.o: hyperart.cpp hyperart.h \
 		regularpgon.h \
 		irregularpgon.h \
 		diagramview.h \
-		qdocviewer.h \
 		qdocument.h \
+		qdocviewer.h \
 		poincareview.h \
 		canvaselements.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hyperart.o hyperart.cpp
@@ -680,8 +703,8 @@ main.o: main.cpp hyperart.h \
 		regularpgon.h \
 		irregularpgon.h \
 		diagramview.h \
-		qdocviewer.h \
 		qdocument.h \
+		qdocviewer.h \
 		poincareview.h \
 		canvaselements.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
@@ -749,8 +772,8 @@ defs.o: defs.cpp defs.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o defs.o defs.cpp
 
 diagramview.o: diagramview.cpp diagramview.h \
-		qdocviewer.h \
 		qdocument.h \
+		qdocviewer.h \
 		diagram.h \
 		defs.h \
 		pattern.h \
@@ -776,11 +799,25 @@ irregularpgon.o: irregularpgon.cpp irregularpgon.h \
 		parameters.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o irregularpgon.o irregularpgon.cpp
 
+qdocument.o: qdocument.cpp qdocument.h \
+		qdocviewer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qdocument.o qdocument.cpp
+
+qdocviewer.o: qdocviewer.cpp qdocviewer.h \
+		qdocument.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qdocviewer.o qdocviewer.cpp
+
 moc_poincareview.o: moc_poincareview.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_poincareview.o moc_poincareview.cpp
 
 moc_hyperart.o: moc_hyperart.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_hyperart.o moc_hyperart.cpp
+
+moc_qdocument.o: moc_qdocument.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qdocument.o moc_qdocument.cpp
+
+moc_qdocviewer.o: moc_qdocviewer.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qdocviewer.o moc_qdocviewer.cpp
 
 ####### Install
 

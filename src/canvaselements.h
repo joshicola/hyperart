@@ -73,8 +73,8 @@ protected:
 class CanvasEllipse : public QGraphicsEllipseItem
 {
 public:
-    CanvasEllipse(QGraphicsScene *canvas, bool fill = true) : QGraphicsEllipseItem(), filled_(fill) {}
-    CanvasEllipse(int x, int y, int width, int height, QGraphicsScene *canvas) : QGraphicsEllipseItem(x,y, rect().width(), rect().height()), filled_(true) {}
+    CanvasEllipse(QGraphicsScene *canvas, bool fill = true) : QGraphicsEllipseItem(), filled_(fill) {canvas->addItem(this);}
+    CanvasEllipse(int x, int y, int width, int height, QGraphicsScene *canvas) : QGraphicsEllipseItem(qreal(x),qreal(y), qreal(width), qreal(height)), filled_(true) {canvas->addItem(this);}
     virtual int rtti() const { return CIRCLE; }
     virtual bool isFilled() { return filled_; }
     virtual void setFilled(bool f) { filled_ = f; }
@@ -155,7 +155,7 @@ hyperbolic lines in the poincare disk
 class CanvasHyperPoly : public CanvasHyperPolyLine
 {
 public:
-    CanvasHyperPoly(QGraphicsScene *canvas, bool fill = true) : CanvasHyperPolyLine(canvas), filled_(fill) {}
+    CanvasHyperPoly(QGraphicsScene *canvas, bool fill = true) : CanvasHyperPolyLine(canvas), filled_(fill) {canvas->addItem(this);}
     virtual ~CanvasHyperPoly() {}
     virtual int rtti() const { return HYPER_POLY; }
     bool isFilled() { return filled_; }
