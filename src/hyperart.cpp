@@ -317,36 +317,37 @@ void HyperArt::toggleLayer(bool state)
 
 void HyperArt::editPreferencesNumber_of_LayersAction_activated()
 {
-  // bool ok;
-  // int res = QInputDialog::getInteger(tr("Number of layers"), tr("Enter how many layers to generate. \nPlease note that successful generation of 4 or more layers\ndepends on your system resources.\nThe value set here will be used for designs loaded from now on."), numLayers, 1, 9, 1, &ok, this);
-  // if (ok)
-  // {
-  //   if (numLayers != res)
-  //   {
-  //     numLayers = res;
-  //     DiagramView *view = resolveViewType(centralWidget());
-  //     if (!view)
-  //     {
-  //       qWarning("HyperArt::load : invalid view object");
-  //       return;
-  //     }
-  //     for (int i = 0; i < 9; i++)
-  //     {
-  //       if (i < numLayers)
-  //       {
-  //         viewLayerActions[i]->setEnabled(true);
-  //         viewLayerActions[i]->setEnabled(true);
-  //       }
-  //       else
-  //       {
-  //         viewLayerActions[i]->setEnabled(false);
-  //         viewLayerActions[i]->setEnabled(false);
-  //       }
-  //     }
-  //     dgram->setNumLayers(numLayers);
-  //     dgram->updateAllViews();
-  //   }
-  // }
+  bool ok;
+  int res = QInputDialog::getInt(this, tr("Number of layers"), tr("Enter how many layers to generate. \nPlease note that successful generation of 4 or more layers\ndepends on your system resources.\nThe value set here will be used for designs loaded from now on."), numLayers, 1, 9, 1, &ok);
+
+  if (ok)
+  {
+    if (numLayers != res)
+    {
+      numLayers = res;
+      DiagramView *view = resolveViewType(centralWidget());
+      if (!view)
+      {
+        qWarning("HyperArt::load : invalid view object");
+        return;
+      }
+      for (int i = 0; i < 9; i++)
+      {
+        if (i < numLayers)
+        {
+          viewLayerActions[i]->setEnabled(true);
+          viewLayerActions[i]->setEnabled(true);
+        }
+        else
+        {
+          viewLayerActions[i]->setEnabled(false);
+          viewLayerActions[i]->setEnabled(false);
+        }
+      }
+      dgram->setNumLayers(numLayers);
+      dgram->updateAllViews();
+    }
+  }
 }
 
 void HyperArt::keyPressEvent(QKeyEvent *e)
