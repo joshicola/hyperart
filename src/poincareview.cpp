@@ -405,10 +405,15 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         double radius = sqrt(pow(double(p1.x() - p2.x()), 2) + pow(double(p1.y() - p2.y()), 2));
         // CanvasEllipse *circle = new CanvasEllipse(2 * radius, 2 * radius, canvas_);
         CanvasEllipse *circle = new CanvasEllipse(0,0,int(2 * radius), int(2 * radius), canvas_);
-        circle->setX(p1.x());
-        circle->setY(p2.y());
+        //TODO: I think that setX, setY set the upper left corner of the ellipse
+        //TODO: setPos sets the center of the ellipse
+        circle->setPos(p1.x() - radius, p1.y() - radius);
+        // circle->setX(p1.x());
+        // circle->setY(p1.y());
         // TODO: Find out why this is needed... I think it is about setting draw order.
+        // TODO: setZValue(qreal )
         // circle->setZ(e->zorder());
+        circle->setZValue(e->zorder());
         circle->setPen(pen);
         circle->setBrush(dgram->colorMapVal(e->cid()));
         circle->setFilled(e->filled());
