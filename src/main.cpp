@@ -28,5 +28,6 @@ int main(int argc, char **argv)
     mw->setWindowTitle("HyperArt");
     mw->show();
     a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
+    a.setWindowIcon(QIcon("butter.xpm"));
     return a.exec();
 }

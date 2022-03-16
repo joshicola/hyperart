@@ -1,7 +1,7 @@
 TEMPLATE	= app
 LANGUAGE	= C++
 
-CONFIG	+= debug warn_on qt thread staticlib widgets
+CONFIG	+= debug warn_on qt thread staticlib
 QT += widgets xml printsupport
 HEADERS	+= canvaselements.h \
 	datareader.h \

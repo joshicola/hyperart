@@ -502,6 +502,7 @@ moc_hyperart.cpp: hyperart.h \
 		defs.h \
 		permutation.h \
 		diagram.h \
+		qdocument.h \
 		pattern.h \
 		element.h \
 		transformation.h \
@@ -512,7 +513,6 @@ moc_hyperart.cpp: hyperart.h \
 		regularpgon.h \
 		irregularpgon.h \
 		diagramview.h \
-		qdocument.h \
 		qdocviewer.h \
 		poincareview.h \
 		canvaselements.h \
@@ -549,6 +549,7 @@ ui_hyperart.h: hyperart.ui \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmessagebox.h \
 		/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qinputdialog.h \
 		datareader.h \
+		qdocument.h \
 		defs.h \
 		pattern.h \
 		element.h \
@@ -559,6 +560,7 @@ ui_hyperart.h: hyperart.ui \
 		pgonedge.h \
 		parameters.h \
 		diagram.h \
+		qdocument.h \
 		defs.h \
 		pattern.h \
 		element.h \
@@ -597,6 +599,7 @@ ui_hyperart.h: hyperart.ui \
 		defs.h \
 		permutation.h \
 		diagram.h \
+		qdocument.h \
 		pattern.h \
 		element.h \
 		transformation.h \
@@ -628,6 +631,7 @@ hyperart.o: hyperart.cpp hyperart.h \
 		defs.h \
 		permutation.h \
 		diagram.h \
+		qdocument.h \
 		pattern.h \
 		element.h \
 		transformation.h \
@@ -638,7 +642,6 @@ hyperart.o: hyperart.cpp hyperart.h \
 		regularpgon.h \
 		irregularpgon.h \
 		diagramview.h \
-		qdocument.h \
 		qdocviewer.h \
 		poincareview.h \
 		canvaselements.h
@@ -648,6 +651,7 @@ datareader.o: datareader.cpp datareader.h \
 		defs.h \
 		permutation.h \
 		diagram.h \
+		qdocument.h \
 		pattern.h \
 		element.h \
 		transformation.h \
@@ -660,6 +664,7 @@ datareader.o: datareader.cpp datareader.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datareader.o datareader.cpp
 
 diagram.o: diagram.cpp diagram.h \
+		qdocument.h \
 		defs.h \
 		pattern.h \
 		element.h \
@@ -693,6 +698,7 @@ main.o: main.cpp hyperart.h \
 		defs.h \
 		permutation.h \
 		diagram.h \
+		qdocument.h \
 		pattern.h \
 		element.h \
 		transformation.h \
@@ -703,7 +709,6 @@ main.o: main.cpp hyperart.h \
 		regularpgon.h \
 		irregularpgon.h \
 		diagramview.h \
-		qdocument.h \
 		qdocviewer.h \
 		poincareview.h \
 		canvaselements.h
@@ -751,6 +756,7 @@ poincareview.o: poincareview.cpp poincareview.h \
 
 regularpgon.o: regularpgon.cpp regularpgon.h \
 		diagram.h \
+		qdocument.h \
 		defs.h \
 		pattern.h \
 		element.h \
@@ -788,6 +794,7 @@ diagramview.o: diagramview.cpp diagramview.h \
 
 irregularpgon.o: irregularpgon.cpp irregularpgon.h \
 		diagram.h \
+		qdocument.h \
 		defs.h \
 		pattern.h \
 		element.h \
