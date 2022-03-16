@@ -405,14 +405,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         double radius = sqrt(pow(double(p1.x() - p2.x()), 2) + pow(double(p1.y() - p2.y()), 2));
         // CanvasEllipse *circle = new CanvasEllipse(2 * radius, 2 * radius, canvas_);
         CanvasEllipse *circle = new CanvasEllipse(0,0,int(2 * radius), int(2 * radius), canvas_);
-        //TODO: I think that setX, setY set the upper left corner of the ellipse
-        //TODO: setPos sets the center of the ellipse
         circle->setPos(p1.x() - radius, p1.y() - radius);
-        // circle->setX(p1.x());
-        // circle->setY(p1.y());
-        // TODO: Find out why this is needed... I think it is about setting draw order.
-        // TODO: setZValue(qreal )
-        // circle->setZ(e->zorder());
         circle->setZValue(e->zorder());
         circle->setPen(pen);
         circle->setBrush(dgram->colorMapVal(e->cid()));
@@ -437,10 +430,9 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         QRect boundingRect = pa.boundingRect();
         QPoint center = boundingRect.center();
         poly->setPolygon(pa);
-        poly->setX(0); // TODO set x,y to sane values other than 0
-        poly->setY(0);
-        // TODO: Find out how to set Z order
-        // poly->setZ(e->zorder());
+        // TODO set x,y to sane values other than 0
+        poly->setPos(0,0);
+        poly->setZValue(e->zorder());
         poly->setPen(pen);
         poly->setBrush(dgram->colorMapVal(e->cid()));
         poly->setFilled(e->filled());
@@ -463,10 +455,9 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         QRect boundingRect = pa.boundingRect();
         QPoint center = boundingRect.center();
         polyline->setPolygon(pa);
-        polyline->setX(0); // TODO set x,y to sane values other than 0
-        polyline->setY(0);
-        //TODO: Set the Z order
-        // polyline->setZ(e->zorder());
+        // TODO set x,y to sane values other than 0
+        polyline->setPos(0,0);
+        polyline->setZValue(e->zorder());
         polyline->setPen(pen);
         polyline->setVisible(visible);
         items_.insert(e->id(), polyline);
@@ -486,10 +477,9 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
             hpolyline->addLine(chl);
         }
         hpolyline->setPen(pen);
-        hpolyline->setX(0); // TODO set x,y to sane values other than 0
-        hpolyline->setY(0);
-        // Set the Z order
-        // hpolyline->setZ(e->zorder());
+        // TODO set x,y to sane values other than 0
+        hpolyline->setPos(0,0);
+        hpolyline->setZValue(e->zorder());
         hpolyline->setVisible(visible);
         items_.insert(e->id(), hpolyline);
     }
@@ -507,9 +497,9 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         }
         hpoly->setPen(pen);
         hpoly->setBrush(dgram->colorMapVal(e->cid()));
-        hpoly->setX(0); // TODO set x,y to sane values other than 0
-        hpoly->setY(0);
-        // hpoly->setZ(e->zorder());
+        // TODO set x,y to sane values other than 0
+        hpoly->setPos(0,0);
+        hpoly->setZValue(e->zorder());
         hpoly->setVisible(visible);
         hpoly->setFilled(hp->filled());
         items_.insert(e->id(), hpoly);
