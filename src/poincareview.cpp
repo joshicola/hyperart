@@ -304,7 +304,7 @@ void PoincareView::drawBoundingCircle(bool visible, bool init)
     if (init)
     {   // How do we associate this with the canvas/scene?
     //disk = new QGraphicsEllipseItem(diameter(), diameter(), canvas_);
-        disk = new QGraphicsEllipseItem(0,0,diameter(), diameter());
+        disk = new QGraphicsEllipseItem(50,0,diameter(), diameter());
         disk->setBrush(QColor(0xf6, 0xeb, 0x70));
         // disk->setX(origin().x());
         // disk->setY(origin().y());
@@ -398,10 +398,10 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
     {
         // first point is the center and second is a point on the circumference
         // calculate radius and draw
-        Point center = e->getPoint(0);
-        Point circum = e->getPoint(1);
-        QPoint p1 = makeQPoint(center);
-        QPoint p2 = makeQPoint(circum);
+        Point* center = e->getPoint(0);
+        Point* circum = e->getPoint(1);
+        QPoint p1 = makeQPoint(*center);
+        QPoint p2 = makeQPoint(*circum);
         double radius = sqrt(pow(double(p1.x() - p2.x()), 2) + pow(double(p1.y() - p2.y()), 2));
         // CanvasEllipse *circle = new CanvasEllipse(2 * radius, 2 * radius, canvas_);
         CanvasEllipse *circle = new CanvasEllipse(0,0,int(2 * radius), int(2 * radius), canvas_);
@@ -426,7 +426,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         int i = 0;
         for (i = 0; i < e->numPoints(); ++i)
         {
-            pt = makeQPoint(e->getPoint(i));
+            pt = makeQPoint(*(e->getPoint(i)));
             pa.setPoint(i, pt.x(), pt.y());
         }
         QRect boundingRect = pa.boundingRect();
@@ -452,7 +452,7 @@ void PoincareView::drawElement(const ElementPtr e, bool visible, bool init)
         int i = 0;
         for (i = 0; i < e->numPoints(); ++i)
         {
-            pt = makeQPoint(e->getPoint(i));
+            pt = makeQPoint(*(e->getPoint(i)));
             pa.setPoint(i, pt.x(), pt.y());
         }
         QRect boundingRect = pa.boundingRect();

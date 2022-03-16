@@ -69,7 +69,7 @@ private:
 Returns a dot product in weierstrass space.
 If both p1 and p2 aren't in weierstrass, then a point (0,0,0) is returned.
 */
-Point weierstrassCrossProduct(const Point &p1, const Point p2);
+Point weierstrassCrossProduct(const Point &p1, const Point &p2);
 
 /**
 An Element is a set of Points which define some geometry. One or more Elements together make up a pattern.  Element is not designed to be used on it's own. Use on of the derived classes instead.
@@ -91,8 +91,8 @@ public:
     virtual bool open() const { return open_; }
     virtual size_type cid() const { return cid_; }
     virtual size_type numPoints() const { return points_.size(); }
-    virtual Point getPoint(size_type i) { return points_.at(i); }
-    virtual const Point &getPoint(size_type i) const { return points_.at(i); }
+    virtual Point* getPoint(size_type i) { return points_.at(i); }
+    //virtual const Point &getPoint(size_type i) const { return points_.at(i); }
     virtual ElemType type() const = 0;
     virtual UId id() const { return id_; }
     virtual int zorder() const { return zorder_; }
@@ -106,7 +106,7 @@ public:
 
     // set color id
     virtual void setCid(size_type c) { cid_ = c; }
-    virtual void addPoint(Point pt) { points_.push_back(pt); }
+    virtual void addPoint(Point pt) { Point* newpt = new Point(pt);points_.push_back(newpt); }
     virtual void setFilled(bool f) { filled_ = f; }
     // virtual void setId(UId id);
     virtual void setZOrder(int z) { zorder_ = z; }
@@ -118,7 +118,8 @@ public:
 
 protected:
     Element();
-    QVector<Point> points_;
+    Element(const Element &e);
+    QVector<Point*> points_;
     size_type cid_;
     bool filled_;
     bool open_;

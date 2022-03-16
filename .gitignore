@@ -32,6 +32,6 @@
 *.app
 src/.qmake.stash
 src/hyperart
-src/hyperart
 src/moc_qdocument.cpp
 src/moc_qdocviewer.cpp
+src/log.log

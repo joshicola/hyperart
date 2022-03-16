@@ -81,7 +81,7 @@ void Point::transform(const Transformation &trans)
     }
 }
 
-Point weierstrassCrossProduct(const Point &p1, const Point p2)
+Point weierstrassCrossProduct(const Point &p1, const Point &p2)
 {
     Point r;
     if ("weierstrass" != p1.type() || "weierstrass" != p2.type())
@@ -107,13 +107,28 @@ Point weierstrassCrossProduct(const Point &p1, const Point p2)
 //============================================================================
 
 Element::Element()
-{
+{   
     filled_ = false;
     cid_ = 0;
     open_ = true;
     zorder_ = 1;
     lineStyle_ = SOLID;
     id_ = IdFactory::getUid();
+}
+
+Element::Element(const Element &e)
+{
+    id_ = e.id_;
+    cid_ = e.cid_;
+    open_ = e.open_;
+    filled_ = e.filled_;
+    zorder_ = e.zorder_;
+    lineStyle_ = e.lineStyle_;
+    for (int i = 0; i < e.points_.size(); i++)
+    {
+        Point* pt = new Point(*(e.points_[i]));
+        points_.append(pt);
+    }
 }
 
 /**
@@ -132,8 +147,8 @@ void Element::transform(const Transformation &tran)
     // first apply transformation to each of the points
     for (size_type i = 0; i < numPoints(); i++)
     {
-        Point p = getPoint(i);
-        p.transform(tran);
+        Point *p = getPoint(i);
+        p->transform(tran);
     }
     // change elements's color to one suggested by
     // the color permutation
@@ -251,7 +266,7 @@ void HyperPolyLine::addPoint(Point pt)
     if (count >= 2)
     {
         HyperLine hline;
-        hline.setPoints(getPoint(count - 2), getPoint(count - 1)); // create a hyperline from last point to current pt
+        hline.setPoints(*getPoint(count - 2), *getPoint(count - 1)); // create a hyperline from last point to current pt
         lines_.push_back(hline);                                   // add it to the lines store.
     }
 }
@@ -268,7 +283,7 @@ void HyperPolyLine::transform(const Transformation &tran)
     for (unsigned int i = 1; i < numPoints(); i++)
     {
         HyperLine hline;
-        hline.setPoints(getPoint(i - 1), getPoint(i));
+        hline.setPoints(*getPoint(i - 1), *getPoint(i));
         lines_.push_back(hline);
     }
 }
@@ -287,23 +302,23 @@ void HyperPoly::addPoint(Point pt)
     {                      // 4 or more points exist (including the new point)
         lines_.pop_back(); // remove last added hyperline
         HyperLine hline;
-        hline.setPoints(getPoint(count - 2), getPoint(count - 1)); // hline from last point to new point
+        hline.setPoints(*getPoint(count - 2), *getPoint(count - 1)); // hline from last point to new point
         lines_.push_back(hline);                                   // add it to the lines store.
-        hline.setPoints(getPoint(count - 1), getPoint(0));         // hline from new point to first point
+        hline.setPoints(*getPoint(count - 1), *getPoint(0));         // hline from new point to first point
         lines_.push_back(hline);                                   // add it to the lines store.
     }
     else if (count == 3)
     {
         HyperLine hline;
-        hline.setPoints(getPoint(count - 2), getPoint(count - 1)); // hline from last point to new point
+        hline.setPoints(*getPoint(count - 2), *getPoint(count - 1)); // hline from last point to new point
         lines_.push_back(hline);                                   // add it to the lines store.
-        hline.setPoints(getPoint(count - 1), getPoint(0));         // hline from new point to first point
+        hline.setPoints(*getPoint(count - 1), *getPoint(0));         // hline from new point to first point
         lines_.push_back(hline);                                   // add it to the lines store.
     }
     else if (count == 2)
     { // only two points so far, just add a hyperline
         HyperLine hline;
-        hline.setPoints(getPoint(count - 2), getPoint(count - 1)); // create a hyperline from last point to current pt
+        hline.setPoints(*getPoint(count - 2), *getPoint(count - 1)); // create a hyperline from last point to current pt
         lines_.push_back(hline);                                   // add it to the lines store.
     }
 }
@@ -313,6 +328,6 @@ void HyperPoly::transform(const Transformation &tran)
     HyperPolyLine::transform(tran);
     // join last point to first
     HyperLine hline;
-    hline.setPoints(getPoint(numPoints() - 1), getPoint(0));
+    hline.setPoints(*getPoint(numPoints() - 1), *getPoint(0));
     lines_.push_back(hline);
 }
