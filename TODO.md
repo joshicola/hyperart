@@ -1,2 +1,0 @@
-- [ ] Polish up README
-- [ ] Prepare for a release.
