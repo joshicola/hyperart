@@ -26,14 +26,14 @@ Pattern::Pattern(const Pattern& other)
     elems_ = other.elems_;
     QMap<UId, ElementPtr >::Iterator it;
     for(it = elems_.begin(); it != elems_.end(); ++it) {
-        ElementPtr e = it.data();
+        ElementPtr e = it.value();
         //this will do the cloning, but use the original's id
         addElement(e, false);
     }
     
     frame_ = other.frame_;
     for(it = frame_.begin(); it != frame_.end(); ++it) {
-        ElementPtr e = it.data();
+        ElementPtr e = it.value();
         //this will do the cloning, but use the original's id
         addElement(e, false, true);
     }
@@ -46,13 +46,13 @@ Pattern& Pattern::operator=(const Pattern& other)
         patId_ = other.patId_;
         QMap<UId, ElementPtr >::Iterator it;
         for(it = elems_.begin(); it != elems_.end(); ++it) {
-            ElementPtr e = it.data();
+            ElementPtr e = it.value();
             delete e;
         }
         elems_.clear(); //remove existing elements
         elems_ = other.elems_;
         for(it = elems_.begin(); it != elems_.end(); ++it) {
-            ElementPtr e = it.data();
+            ElementPtr e = it.value();
             //this will do the cloning, but use the original's id
             addElement(e, false);
         }
@@ -60,7 +60,7 @@ Pattern& Pattern::operator=(const Pattern& other)
         frame_.clear(); //remove existing elements
         frame_ = other.frame_;
         for(it = frame_.begin(); it != frame_.end(); ++it) {
-            ElementPtr e = it.data();
+            ElementPtr e = it.value();
             //this will do the cloning, but use the original's id
             addElement(e, false, true);
         }
@@ -72,11 +72,11 @@ Pattern::~Pattern()
 {
     QMap<UId, ElementPtr >::Iterator it;
     for(it = elems_.begin(); it != elems_.end(); ++it) {
-        ElementPtr e = it.data();
+        ElementPtr e = it.value();
         delete e;
     }
     for(it = frame_.begin(); it != frame_.end(); ++it) {
-        ElementPtr e = it.data();
+        ElementPtr e = it.value();
         delete e;
     }
 }
@@ -143,11 +143,11 @@ PatternPtr Pattern::clone()
     ElementPtr elem;
     //for all existing elements in fundamental pattern
     for(it = elems_.begin(); it != elems_.end(); ++it) {
-        elem = it.data();
+        elem = it.value();
         clonePat->addElement(elem);
     }
     for(it = frame_.begin(); it != frame_.end(); ++it) {
-        elem = it.data();
+        elem = it.value();
         clonePat->addElement(elem, true, true);
     }
     return clonePat;
@@ -162,11 +162,11 @@ PatternPtr Pattern::cloneAndTransform(const Transformation& trans)
     ElementPtr elem;
     //for all existing elements in fundamental pattern
     for(it = elems_.begin(); it != elems_.end(); ++it) {
-        elem = it.data();
+        elem = it.value();
         clonePat->addElement(elem, trans);
     }
     for(it = frame_.begin(); it != frame_.end(); ++it) {
-        elem = it.data();
+        elem = it.value();
         clonePat->addElement(elem, trans, true, true);
     }
     return clonePat;
@@ -179,11 +179,11 @@ void Pattern::transform(const Transformation& trans)
     ElementPtr elem;
     //for all existing elements in fundamental pattern
     for(it = elems_.begin(); it != elems_.end(); ++it) {
-        elem = it.data();
+        elem = it.value();
         elem->transform(trans);
     }
     for(it = frame_.begin(); it != frame_.end(); ++it) {
-        elem = it.data();
+        elem = it.value();
         elem->transform(trans);
     }
 }

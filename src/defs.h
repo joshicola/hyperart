@@ -11,31 +11,36 @@
 #ifndef DEFS_H
 #define DEFS_H
 
-//This file defines various enumerations and constants
+// This file defines various enumerations and constants
 
 #include <map>
+#include <qmap.h>
 #include <vector>
 using namespace std;
 
-enum ReflSymType {
+enum ReflSymType
+{
     REFL_NONE = 0,
     REFL_EDGE_BISECTOR = 1,
     REFL_PGON_RADIUS = 2
 };
 
-//in the old code -ve values meant reflection and +ve meant rotation
-enum Orientation {
+// in the old code -ve values meant reflection and +ve meant rotation
+enum Orientation
+{
     REFLECTION = -1,
     ROTATION = 1
 };
 
-enum Exposure {
+enum Exposure
+{
     MINEXPOSURE,
     MAXEXPOSURE
 };
 
-//used for runtime type identification
-enum ElemType {
+// used for runtime type identification
+enum ElemType
+{
     ELEMENT = 0,
     EUCLID_POLYLINE,
     EUCLID_POLY,
@@ -44,55 +49,62 @@ enum ElemType {
     HYPER_POLY
 };
 
-enum ZoomType {
+enum ZoomType
+{
     IN = -1,
     OUT = 1,
     DEFAULT = 2
 };
 
-enum PanType {
+enum PanType
+{
     PAN_LEFT,
     PAN_RIGHT,
     PAN_UP,
     PAN_DOWN
 };
 
-enum ViewMode {
-    NORMAL, //no animation, no editing
+enum ViewMode
+{
+    NORMAL, // no animation, no editing
     ANIMATE,
     EDIT
 };
 
-enum DiagramType {
-    DIAGRAM = 0, //abstract diagram 
+enum DiagramType
+{
+    DIAGRAM = 0, // abstract diagram
     REGULAR_PGON,
     IRREGULAR_PGON
-    //etc
+    // etc
 };
 
-enum LineStyle {
+enum LineStyle
+{
     SOLID = 0,
     DOTS
 };
 
 const double PI = 3.14159265359;
 
-typedef unsigned int UId; //app level unique id
+typedef unsigned int UId; // app level unique id
 
-//app level unique ids
-class IdFactory {
+// app level unique ids
+class IdFactory
+{
 public:
-    //get the next unique integer id
+    // get the next unique integer id
     static UId getUid();
+
 private:
     static UId currentUid_;
 };
 
 class Element;
-typedef Element* ElementPtr;
+typedef Element *ElementPtr;
 
 class Pattern;
-typedef Pattern* PatternPtr;
+typedef Pattern *PatternPtr;
 
-typedef pair<int, UId> PatId; //ientifies a pattern by it's layer number and pattern UId
+typedef pair<int, UId> PatId; // ientifies a pattern by it's layer number and pattern UId
 #endif

@@ -1,0 +1,97 @@
+g++ -m64 -o hyperart canvaselements.o datareader.o diagram.o element.o layer.o main.o matrix.o parameters.o pattern.o permutation.o pgonedge.o poincareview.o qdocument.o qdocviewer.o regularpgon.o transformation.o defs.o diagramview.o irregularpgon.o moc_poincareview.o moc_qdocument.o moc_qdocviewer.o qmake_image_collection.o hyperart.o moc_hyperart.o    -L/usr/lib/x86_64-linux-gnu -lpthread -lQt3Support -lQtXml -lQtGui -lQtCore 
+hyperart.o: In function `qt_noop()':
+/hyperart/hyperart.ui.h:22: multiple definition of `HyperArt::destroy()'
+main.o:/hyperart/hyperart.ui.h:22: first defined here
+hyperart.o: In function `std::vector<QAction*, std::allocator<QAction*> >::_M_erase_at_end(QAction**)':
+/hyperart/hyperart.ui.h:27: multiple definition of `HyperArt::fileNew()'
+main.o:/hyperart/hyperart.ui.h:27: first defined here
+hyperart.o: In function `HyperArt::fileOpen()':
+/hyperart/hyperart.ui.h:34: multiple definition of `HyperArt::fileOpen()'
+main.o:/hyperart/hyperart.ui.h:34: first defined here
+hyperart.o: In function `HyperArt::fileSave()':
+/hyperart/hyperart.ui.h:43: multiple definition of `HyperArt::fileSave()'
+main.o:/hyperart/hyperart.ui.h:43: first defined here
+hyperart.o: In function `HyperArt::fileSaveAs()':
+/hyperart/hyperart.ui.h:47: multiple definition of `HyperArt::fileSaveAs()'
+main.o:/hyperart/hyperart.ui.h:47: first defined here
+hyperart.o: In function `HyperArt::filePrint()':
+/hyperart/hyperart.ui.h:68: multiple definition of `HyperArt::filePrint()'
+main.o:/hyperart/hyperart.ui.h:68: first defined here
+hyperart.o: In function `HyperArt::fileExit()':
+/hyperart/hyperart.ui.h:91: multiple definition of `HyperArt::fileExit()'
+main.o:/hyperart/hyperart.ui.h:91: first defined here
+hyperart.o: In function `HyperArt::editUndo()':
+/hyperart/hyperart.ui.h:96: multiple definition of `HyperArt::editUndo()'
+main.o:/hyperart/hyperart.ui.h:96: first defined here
+hyperart.o: In function `HyperArt::editRedo()':
+/hyperart/hyperart.ui.h:100: multiple definition of `HyperArt::editRedo()'
+main.o:/hyperart/hyperart.ui.h:100: first defined here
+hyperart.o: In function `HyperArt::editCut()':
+/hyperart/hyperart.ui.h:104: multiple definition of `HyperArt::editCut()'
+main.o:/hyperart/hyperart.ui.h:104: first defined here
+hyperart.o: In function `HyperArt::editCopy()':
+/hyperart/hyperart.ui.h:108: multiple definition of `HyperArt::editCopy()'
+main.o:/hyperart/hyperart.ui.h:108: first defined here
+hyperart.o: In function `HyperArt::editPaste()':
+/hyperart/hyperart.ui.h:112: multiple definition of `HyperArt::editPaste()'
+main.o:/hyperart/hyperart.ui.h:112: first defined here
+hyperart.o: In function `HyperArt::editFind()':
+/hyperart/hyperart.ui.h:116: multiple definition of `HyperArt::editFind()'
+main.o:/hyperart/hyperart.ui.h:116: first defined here
+hyperart.o: In function `HyperArt::helpIndex()':
+/hyperart/hyperart.ui.h:120: multiple definition of `HyperArt::helpIndex()'
+main.o:/hyperart/hyperart.ui.h:120: first defined here
+hyperart.o: In function `HyperArt::helpContents()':
+/hyperart/hyperart.ui.h:124: multiple definition of `HyperArt::helpContents()'
+main.o:/hyperart/hyperart.ui.h:124: first defined here
+hyperart.o: In function `HyperArt::helpAbout()':
+/hyperart/hyperart.ui.h:128: multiple definition of `HyperArt::helpAbout()'
+main.o:/hyperart/hyperart.ui.h:128: first defined here
+hyperart.o: In function `HyperArt::load(QString const&)':
+/hyperart/hyperart.ui.h:135: multiple definition of `HyperArt::load(QString const&)'
+main.o:/hyperart/hyperart.ui.h:135: first defined here
+hyperart.o: In function `HyperArt::init()':
+/hyperart/hyperart.ui.h:192: multiple definition of `HyperArt::init()'
+main.o:/hyperart/hyperart.ui.h:192: first defined here
+hyperart.o: In function `HyperArt::resolveViewType(QWidget*)':
+/hyperart/hyperart.ui.h:232: multiple definition of `HyperArt::resolveViewType(QWidget*)'
+main.o:/hyperart/hyperart.ui.h:232: first defined here
+hyperart.o: In function `HyperArt::animatePlay()':
+/hyperart/hyperart.ui.h:242: multiple definition of `HyperArt::animatePlay()'
+main.o:/hyperart/hyperart.ui.h:242: first defined here
+hyperart.o: In function `HyperArt::animatePause()':
+/hyperart/hyperart.ui.h:252: multiple definition of `HyperArt::animatePause()'
+main.o:/hyperart/hyperart.ui.h:252: first defined here
+hyperart.o: In function `HyperArt::animateStop()':
+/hyperart/hyperart.ui.h:261: multiple definition of `HyperArt::animateStop()'
+main.o:/hyperart/hyperart.ui.h:261: first defined here
+hyperart.o: In function `HyperArt::animateNext()':
+/hyperart/hyperart.ui.h:271: multiple definition of `HyperArt::animateNext()'
+main.o:/hyperart/hyperart.ui.h:271: first defined here
+hyperart.o: In function `HyperArt::animatePrev()':
+/hyperart/hyperart.ui.h:276: multiple definition of `HyperArt::animatePrev()'
+main.o:/hyperart/hyperart.ui.h:276: first defined here
+hyperart.o: In function `HyperArt::viewToggle_FrameAction_toggled(bool)':
+/hyperart/hyperart.ui.h:281: multiple definition of `HyperArt::viewToggle_FrameAction_toggled(bool)'
+main.o:/hyperart/hyperart.ui.h:281: first defined here
+hyperart.o: In function `HyperArt::zoomDefaultAction_activated()':
+/hyperart/hyperart.ui.h:286: multiple definition of `HyperArt::zoomDefaultAction_activated()'
+main.o:/hyperart/hyperart.ui.h:286: first defined here
+hyperart.o: In function `HyperArt::zoomZoom_InAction_activated()':
+/hyperart/hyperart.ui.h:291: multiple definition of `HyperArt::zoomZoom_InAction_activated()'
+main.o:/hyperart/hyperart.ui.h:291: first defined here
+hyperart.o: In function `HyperArt::zoomZoom_outAction_activated()':
+/hyperart/hyperart.ui.h:296: multiple definition of `HyperArt::zoomZoom_outAction_activated()'
+main.o:/hyperart/hyperart.ui.h:296: first defined here
+hyperart.o: In function `HyperArt::toggleLayer(bool)':
+/hyperart/hyperart.ui.h:301: multiple definition of `HyperArt::toggleLayer(bool)'
+main.o:/hyperart/hyperart.ui.h:301: first defined here
+hyperart.o: In function `HyperArt::editPreferencesNumber_of_LayersAction_activated()':
+/hyperart/hyperart.ui.h:308: multiple definition of `HyperArt::editPreferencesNumber_of_LayersAction_activated()'
+main.o:/hyperart/hyperart.ui.h:308: first defined here
+hyperart.o: In function `HyperArt::keyPressEvent(QKeyEvent*)':
+/hyperart/hyperart.ui.h:342: multiple definition of `HyperArt::keyPressEvent(QKeyEvent*)'
+main.o:/hyperart/hyperart.ui.h:342: first defined here
+collect2: error: ld returned 1 exit status
+Makefile:150: recipe for target 'hyperart' failed
+make: *** [hyperart] Error 1

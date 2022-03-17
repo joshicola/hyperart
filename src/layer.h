@@ -21,18 +21,21 @@
 #define LAYER_H
 
 #include "pattern.h"
+// Added by qt3to4:
+#include <QList>
 
-typedef QValueList<PatternPtr> PatternList;
-typedef QValueList<PatternPtr>::iterator PatternListIter;
+typedef QList<PatternPtr> PatternList;
+typedef QList<PatternPtr>::iterator PatternListIter;
 
 /**
 Layer is used to group patterns. It is useful to view different layers of the diagram.
 
 @author Ajit Datar
 */
-class Layer {
+class Layer
+{
 public:
-    Layer(int id=0) : layerId_(id) { }
+    Layer(int id = 0) : layerId_(id) {}
     int id() { return layerId_; }
     void setId(int id) { layerId_ = id; }
     /**
@@ -41,10 +44,11 @@ public:
     void addPattern(const PatternPtr pat);
     void removePattern(UId patId);
     bool hasPattern(const UId patId) { return patterns_.contains(patId); }
-    //TODO check if patId exists
+    // TODO check if patId exists
     const PatternPtr pattern(const UId patId) const { return patterns_[patId]; }
     const PatternList patterns() const { return patterns_.values(); }
     void clear();
+
 private:
     QMap<UId, PatternPtr> patterns_;
     int layerId_;

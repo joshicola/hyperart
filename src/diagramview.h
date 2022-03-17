@@ -1,7 +1,7 @@
 //
 // C++ Interface: diagramview
 //
-// Description: 
+// Description:
 //
 //
 // Author: Ajit Datar <ajitdatar@gmail.com>, (C) 2005
@@ -21,17 +21,19 @@ Generic interface for a view on a Diagram. Use this as the second base class in 
 
 @author Ajit Datar
 */
-class DiagramView{
+class DiagramView
+{
 public:
     DiagramView();
 
     virtual ~DiagramView();
-    virtual void setDocument(QDocument* doc);
-    virtual void print(QPainter& p)=0;
-    virtual void saveAs(QString fileName)=0;
+    virtual void setDocument(QDocument *doc);
+    virtual void print(QPainter &p) = 0;
+    virtual void saveAs(QString fileName) = 0;
+
 protected:
-    QDocViewer* docViewer;
-    Diagram* dgram; //current diagram pointer
+    QDocViewer *docViewer;
+    Diagram *dgram; // current diagram pointer
 };
 
 #endif
