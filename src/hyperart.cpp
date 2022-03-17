@@ -76,7 +76,7 @@ void HyperArt::fileSaveAs()
 }
 
 void HyperArt::filePrint()
-{
+{ //TODO: implement in Qt5
   // if (printer->begin(this))
   // { // printer dialog
   //   statusBar()->showMessage(tr("Printing..."));
