@@ -1,5 +1,5 @@
 # HyperArt
-HyperArt is a program to view and create repeating hyperbolic patterns using algorithm developed by [Dr Douglas Dunham](http://hyperart.sourceforge.net/www.d.umn.edu/~ddunham/). The patterns are similar to those created by the venerable Dutch artist M. C. Escher. While this might not be of immediate practical use, it is very interesting from mathematical and artistic viewpoints.
+HyperArt is a program to view and create repeating hyperbolic patterns using an algorithm developed by [Dr Douglas Dunham](http://hyperart.sourceforge.net/www.d.umn.edu/~ddunham/). The patterns are similar to those created by the venerable Dutch artist M. C. Escher. While this might not be of immediate practical use, it is very interesting from mathematical and artistic viewpoints.
 | ![img/p7073_social.gif](https://www.d.umn.edu/~ddunham/p7073.gif) |
 |:--:|
 | <b>Image Credits - Dr. Douglas Dunham</b>|
