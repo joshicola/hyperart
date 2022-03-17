@@ -51,8 +51,8 @@ bool QDocViewer::setDocument(QDocument* newDocument)
 {
   _deregister( getDocument() );
   _register(newDocument);
-    
-  return TRUE;
+
+  return true;
 } // !setDocument()
 
 
@@ -64,7 +64,7 @@ bool QDocViewer::_register(QDocument* thisDocument)
   if (!thisDocument) 
   {
     qDebug("QDocViewer: document invalid");
-    return FALSE;
+    return false;
   }
 
   QObject::connect(thisDocument, SIGNAL(onDocChange(unsigned int, unsigned long)),      
@@ -79,11 +79,11 @@ bool QDocViewer::_register(QDocument* thisDocument)
 
 bool QDocViewer::_deregister(QDocument* thisDocument) 
 {
-  if (!thisDocument) return FALSE;
+  if (!thisDocument) return false;
 
   /* den View vom Dokument de-registrieren */
   thisDocument->removeView(this);
-  return TRUE;
+  return true;
 } // !_deregister()
 
 

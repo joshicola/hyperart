@@ -17,7 +17,8 @@ A Pgon edge for the central pgon. It has adjacency info.
 
 @author Ajit Datar
 */
-class PgonEdge{
+class PgonEdge
+{
 public:
     PgonEdge();
 
@@ -25,12 +26,12 @@ public:
     void setNumColors(size_t numColors);
 
     Orientation orientation() { return orientation_; }
-    Permutation& colorPerm() { return perm_; }
+    Permutation &colorPerm() { return perm_; }
     int adjEdgeId() { return adjEdgeId_; }
-    
+
     void setAdjEdgeId(int v) { adjEdgeId_ = v; }
     void setOrientation(Orientation o) { orientation_ = o; }
-    
+
 private:
     Orientation orientation_;
     Permutation perm_;

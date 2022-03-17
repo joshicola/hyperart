@@ -2,7 +2,7 @@ TEMPLATE	= app
 LANGUAGE	= C++
 
 CONFIG	+= debug warn_on qt thread staticlib
-
+QT += widgets xml printsupport
 HEADERS	+= canvaselements.h \
 	datareader.h \
 	defs.h \
@@ -15,15 +15,17 @@ HEADERS	+= canvaselements.h \
 	permutation.h \
 	pgonedge.h \
 	poincareview.h \
-	qdocument.h \
-	qdocviewer.h \
 	regularpgon.h \
 	transformation.h \
-	hyperart.ui.h \
+	ui_hyperart.h \
+	hyperart.h \
 	diagramview.h \
-	irregularpgon.h
+	irregularpgon.h \
+	qdocument.h \
+	qdocviewer.h
 
 SOURCES	+= canvaselements.cpp \
+	hyperart.cpp \
 	datareader.cpp \
 	diagram.cpp \
 	element.cpp \
@@ -35,13 +37,13 @@ SOURCES	+= canvaselements.cpp \
 	permutation.cpp \
 	pgonedge.cpp \
 	poincareview.cpp \
-	qdocument.cpp \
-	qdocviewer.cpp \
 	regularpgon.cpp \
 	transformation.cpp \
 	defs.cpp \
 	diagramview.cpp \
-	irregularpgon.cpp
+	irregularpgon.cpp \
+	qdocument.cpp \
+	qdocviewer.cpp
 
 FORMS	= hyperart.ui
 
@@ -64,3 +66,5 @@ IMAGES	= butter.xpm \
 # Target is an application:  ./hyperart
 
 TARGET = ./hyperart
+
+

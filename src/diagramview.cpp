@@ -28,12 +28,12 @@ DiagramView::~DiagramView()
 {
     if(docViewer) {
         delete docViewer;
-        docViewer = 0;
     }
 }
 
 void DiagramView::setDocument(QDocument* doc)
-{
+{   
+    
     if(docViewer) {
         docViewer->setDocument(doc);
     }

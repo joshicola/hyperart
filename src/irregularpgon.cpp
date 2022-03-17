@@ -235,7 +235,7 @@ void IrregularPgon::make()
     
     QMap<PatId, PatternPtr>::iterator it;
     for(it=diag_.begin(); it != diag_.end(); ++it) {
-        delete it.data();
+        delete it.value();
     }
     diag_.clear();
     for(unsigned int i=0; i<layers_.size(); i++) {

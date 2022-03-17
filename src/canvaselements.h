@@ -21,42 +21,48 @@
 #ifndef CANVASELEMENTS_H
 #define CANVASELEMENTS_H
 
-#include <qcanvas.h>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsPolygonItem>
+#include <QtWidgets/QGraphicsEllipseItem>
 #include <qpainter.h>
 #include <qpoint.h>
 #include <qsize.h>
+// Added by qt3to4:
+#include <QPolygon>
 #include "defs.h"
 
 /**
 Declares various canvas elements used by PoincareView.
 These are essentially mappings from corresponding Element to its
-screen representation on a QCanvas
+screen representation on a QGraphicsScene
 */
 
 /**
 A CanvasPolyLine is a Euclid polyline.
-Derived from QCanvasPolygon.
+Derived from  QGraphicsPolygonItem.
 Use setPoints to set polyline points. setPen to set the pen.
 Brush is not used.
 */
-class CanvasPolyLine : public QCanvasPolygon
+class CanvasPolyLine : public QGraphicsPolygonItem
 {
 public:
-    CanvasPolyLine(QCanvas* canvas);
+    CanvasPolyLine(QGraphicsScene *canvas);
     virtual int rtti() const { return EUCLID_POLYLINE; }
+
 protected:
     virtual void drawShape(QPainter &painter);
 };
 
 //===========================================================================
 
-class CanvasPoly : public QCanvasPolygon
+class CanvasPoly : public  QGraphicsPolygonItem
 {
 public:
-    CanvasPoly(QCanvas* canvas, bool fill=true);
+    CanvasPoly(QGraphicsScene *canvas, bool fill = true);
     virtual int rtti() const { return EUCLID_POLY; }
     virtual bool isFilled() { return filled_; }
     virtual void setFilled(bool f) { filled_ = f; }
+
 protected:
     virtual void drawShape(QPainter &painter);
     bool filled_;
@@ -64,14 +70,15 @@ protected:
 
 //===========================================================================
 
-class CanvasEllipse : public QCanvasEllipse
+class CanvasEllipse : public QGraphicsEllipseItem
 {
 public:
-    CanvasEllipse(QCanvas* canvas, bool fill=true) : QCanvasEllipse(canvas), filled_(fill) { }
-    CanvasEllipse( int width, int height, QCanvas * canvas ) : QCanvasEllipse(width,height,canvas), filled_(true) { }
+    CanvasEllipse(QGraphicsScene *canvas, bool fill = true) : QGraphicsEllipseItem(), filled_(fill) {canvas->addItem(this);}
+    CanvasEllipse(int x, int y, int width, int height, QGraphicsScene *canvas) : QGraphicsEllipseItem(qreal(x),qreal(y), qreal(width), qreal(height)), filled_(true) {canvas->addItem(this);}
     virtual int rtti() const { return CIRCLE; }
     virtual bool isFilled() { return filled_; }
     virtual void setFilled(bool f) { filled_ = f; }
+
 protected:
     virtual void drawShape(QPainter &painter);
     bool filled_;
@@ -79,36 +86,37 @@ protected:
 //===========================================================================
 
 /**
-A Hyperbolic Line. 
+A Hyperbolic Line.
 Makes sense only on a poincare or other hyperbolic models.
 */
 class CanvasHyperLine //: public QCanvasPolygonalItem
 {
 public:
-    //friend class CanvasHyperPolyLine;
+    // friend class CanvasHyperPolyLine;
     CanvasHyperLine();
-    void setParameters(const QPoint& topleft, const QSize& size, int startAngle, int alen);
-    void setParamters(const QPoint& a, const QPoint& b);
-    //virtual QPointArray areaPoints() const;
+    void setParameters(const QPoint &topleft, const QSize &size, int startAngle, int alen);
+    void setParameters(const QPoint &a, const QPoint &b);
+    // virtual QPointArray areaPoints() const;
     /**
     Doesn't make sense to use this without calling one of the setparamters() method first
     */
-    virtual QRect boundingRect() const { return boundingRect_; }
+    virtual QRectF boundingRect() const { return QRectF(boundingRect_); }
     bool isApproximated() { return approximate_; }
-    //make sense if isApproximated()
+    // make sense if isApproximated()
     QPoint a() { return a_; }
     QPoint b() { return b_; }
-    //make sense if not isApproximated()
+    // make sense if not isApproximated()
     QPoint topLeft() { return rect_.topLeft(); }
     QSize size() { return rect_.size(); }
     int startAngle() { return angle1_; }
     int lenAngle() { return angle2_; }
-    virtual void draw(QPainter& painter) { drawShape(painter); }
+    virtual void draw(QPainter &painter) { drawShape(painter); }
+
 protected:
     virtual void drawShape(QPainter &painter);
-    QRect rect_; //the ellipse for drawing this arc
+    QRect rect_; // the ellipse for drawing this arc
     int angle1_, angle2_;
-    QPoint a_,b_; //if approximated using a straight line
+    QPoint a_, b_; // if approximated using a straight line
     bool approximate_;
     QRect boundingRect_;
 };
@@ -119,21 +127,22 @@ protected:
 It is like a Euclid Polyline but individual lines are
 hyperbolic lines in the poincare disk.
 */
-class CanvasHyperPolyLine : public QCanvasPolygonalItem
+class CanvasHyperPolyLine : public QGraphicsPolygonItem
 {
 public:
-    CanvasHyperPolyLine(QCanvas* canvas);
+    CanvasHyperPolyLine(QGraphicsScene *canvas);
     virtual ~CanvasHyperPolyLine();
-    void addLine(CanvasHyperLine* line);
+    void addLine(CanvasHyperLine *line);
     virtual int rtti() const { return HYPER_POLYLINE; }
-    virtual QPointArray areaPoints() const;
+    virtual QPolygon areaPoints() const;
     /**
     Doesn't make sense to use this without calling setLines() method first
     */
-    virtual QRect boundingRect() const { return boundingRect_; }
+    virtual QRectF boundingRect() const { return QRectF(boundingRect_); }
+
 protected:
     virtual void drawShape(QPainter &painter);
-    vector<CanvasHyperLine*> lines_;
+    vector<CanvasHyperLine *> lines_;
     QRect boundingRect_;
 };
 
@@ -146,15 +155,16 @@ hyperbolic lines in the poincare disk
 class CanvasHyperPoly : public CanvasHyperPolyLine
 {
 public:
-    CanvasHyperPoly(QCanvas* canvas, bool fill=true) : CanvasHyperPolyLine(canvas), filled_(fill) { }
-    virtual ~CanvasHyperPoly() { }
+    CanvasHyperPoly(QGraphicsScene *canvas, bool fill = true) : CanvasHyperPolyLine(canvas), filled_(fill) {canvas->addItem(this);}
+    virtual ~CanvasHyperPoly() {}
     virtual int rtti() const { return HYPER_POLY; }
     bool isFilled() { return filled_; }
-    void addLine(CanvasHyperLine* line);
+    void addLine(CanvasHyperLine *line);
     void setFilled(bool f) { filled_ = f; }
+
 protected:
     virtual void drawShape(QPainter &painter);
-    QPointArray points_;
+    QPolygon points_;
     bool filled_;
 };
 //===========================================================================
