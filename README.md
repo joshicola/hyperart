@@ -1,5 +1,8 @@
 # HyperArt
 HyperArt is a program to view and create repeating hyperbolic patterns using algorithm developed by [Dr Douglas Dunham](http://hyperart.sourceforge.net/www.d.umn.edu/~ddunham/). The patterns are similar to those created by the venerable Dutch artist M. C. Escher. While this might not be of immediate practical use, it is very interesting from mathematical and artistic viewpoints.
+| ![img/p7073_social.gif](https://www.d.umn.edu/~ddunham/p7073.gif) |
+|:--:|
+| <b>Image Credits - Dr. Douglas Dunham</b>|
 
 This project is a port of Ajit Datar's original [HyperArt](http://hyperart.sourceforge.net/) project with Dr. Douglas Duhnam in 2005 to Qt 5.12. As the original code was written for Qt 3.3 it is no longer supported by modern operating systems. His [Master's Thesis](docs/Generating_Hyperbolic_Patterns_for_Regular_and_Non-Regular_P-Gons.pdf) is contained within. I am grateful for his work and continued friendship.
 
